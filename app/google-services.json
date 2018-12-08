@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "870913243761",
+    "firebase_url": "https://test1-alpha.firebaseio.com",
+    "project_id": "test1-alpha",
+    "storage_bucket": "test1-alpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870913243761:android:c80a71c090f3f1f8",
+        "android_client_info": {
+          "package_name": "com.example.salon.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870913243761-1jln9uc2mmd0qt3s42jg4kau54bccu7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXDwqg6mWOcwIsJEpvU6GKfWAq1ioqFfk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
