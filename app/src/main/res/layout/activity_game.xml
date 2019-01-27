@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.GameActivity">
+
+    <ImageButton
+        android:id="@+id/BTNgun"
+        android:layout_width="90dp"
+        android:layout_height="86dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="shoot"
+        app:srcCompat="@drawable/gun" />
+
+    <ImageButton
+        android:id="@+id/BTNshild"
+        android:layout_width="102dp"
+        android:layout_height="83dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="135dp"
+        android:layout_marginTop="411dp"
+        android:onClick="defance"
+        app:srcCompat="@drawable/shield" />
+
+    <ImageButton
+        android:id="@+id/BTNammuo"
+        android:layout_width="94dp"
+        android:layout_height="84dp"
+        android:layout_alignTop="@+id/BTNgun"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="26dp"
+        android:onClick="relood"
+        app:srcCompat="@drawable/shells" />
+
+    <ImageView
+        android:id="@+id/ImgMyChoos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="189dp"
+        android:layout_toEndOf="@+id/BTNgun"
+        app:srcCompat="@drawable/shield" />
+
+    <ImageView
+        android:id="@+id/ImgOtherChoos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/BTNshild"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="-25dp"
+        app:srcCompat="@drawable/shield" />
+</RelativeLayout>

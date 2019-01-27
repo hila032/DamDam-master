@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register">
+    tools:context=".activities.RegisterActivity">
 
     <EditText
         android:id="@+id/passwordReg"
@@ -35,6 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="143dp"
+        android:onClick="register"
         android:text="register"
         tools:text="register" />
 
@@ -45,6 +46,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="86dp"
+        android:onClick="login"
         android:text="login"
         tools:text="login" />
 </RelativeLayout>
