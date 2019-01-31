@@ -1,10 +1,9 @@
 package com.example.salon.myapplication.activities;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,10 +15,7 @@ import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.AvailableUsersModel;
 import com.example.salon.myapplication.models.DialogsModel;
 import com.example.salon.myapplication.models.InvitesModel;
-import com.example.salon.myapplication.models.RoomsModel;
 import com.example.salon.myapplication.models.UsersModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,15 +36,20 @@ public class EnemychoseActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("Rooms").child(UsersModel.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    Intent intent = new Intent(EnemychoseActivity.this, GameActivity.class);
 
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                boolean isInGame = getSharedPreferences("state", Context.MODE_PRIVATE).getBoolean("isInGame", false);
+                if (dataSnapshot.getValue() != null && !isInGame) {
+                        Toast.makeText(EnemychoseActivity.this, "guyyhynb", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(EnemychoseActivity.this, GameActivity.class);
 
-                    intent.putExtra("id", UsersModel.getId());
-                    startActivity(intent);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        intent.putExtra("id", UsersModel.getId());
+
+                        startActivity(intent);
+                    }
                 }
-            }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -89,12 +90,13 @@ public class EnemychoseActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String idSecondPlayer = adapter.getItem(position);
-                            InvitesModel.addInvits(UsersModel.getId(),idSecondPlayer);
+                            InvitesModel.addInvits(UsersModel.getId(), idSecondPlayer);
 
                         }
                     });
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -112,5 +114,11 @@ public class EnemychoseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         AvailableUsersModel.addUserToAvailableUsers(UsersModel.getId(), UsersModel.getEmail());
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

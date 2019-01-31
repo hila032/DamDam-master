@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".activities.GameActivity">
 
     <ImageButton
@@ -12,7 +13,7 @@
         android:layout_height="86dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="14dp"
         android:layout_marginBottom="16dp"
         android:onClick="shoot"
         app:srcCompat="@drawable/gun" />
@@ -23,8 +24,8 @@
         android:layout_height="83dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="135dp"
-        android:layout_marginTop="411dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="412dp"
         android:onClick="defance"
         app:srcCompat="@drawable/shield" />
 
@@ -34,28 +35,17 @@
         android:layout_height="84dp"
         android:layout_alignTop="@+id/BTNgun"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="26dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="13dp"
         android:onClick="relood"
         app:srcCompat="@drawable/shells" />
 
-    <ImageView
-        android:id="@+id/ImgMyChoos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginBottom="189dp"
-        android:layout_toEndOf="@+id/BTNgun"
-        app:srcCompat="@drawable/shield" />
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/BTNgun"
+        android:layout_marginStart="136dp"
+        android:layout_marginBottom="-41dp" />
 
-    <ImageView
-        android:id="@+id/ImgOtherChoos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/BTNshild"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="41dp"
-        android:layout_marginEnd="-25dp"
-        app:srcCompat="@drawable/shield" />
 </RelativeLayout>
