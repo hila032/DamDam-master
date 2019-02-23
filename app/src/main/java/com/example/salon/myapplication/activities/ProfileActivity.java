@@ -48,6 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
             Manifest.permission.VIBRATE,
     };
 
+
+
     private void checkAndReqeustPremissions() {
         List<String> ListPremissionsNeeded = new ArrayList<>();
         for (String permission : premissions) {

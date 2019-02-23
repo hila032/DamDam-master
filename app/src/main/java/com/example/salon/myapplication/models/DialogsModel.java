@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
+import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.activities.EnemychoseActivity;
 import com.example.salon.myapplication.activities.GameActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,8 +36,7 @@ public class DialogsModel {
                             public void onComplete(@NonNull Task<Void> task) {
                                 Intent intent = new Intent (correntActivity, GameActivity.class);
                                 intent.putExtra("id", otherIdSnapshot.getValue().toString());
-
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("whoAmI", EPlayer.PLAYER2);
 
                                 context.startActivity(intent);
                             }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background1"
     tools:context=".activities.RegisterActivity">
 
     <EditText
@@ -28,6 +29,17 @@
         android:hint="Enter Email"
         android:inputType="textEmailAddress" />
 
+    <EditText
+        android:id="@+id/nikenameReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/passwordReg"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="104dp"
+        android:ems="10"
+        android:hint="Enter nickname"
+        android:inputType="textEmailAddress" />
+
     <Button
         android:id="@+id/registerButtonReg"
         android:layout_width="wrap_content"
@@ -35,8 +47,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="143dp"
+        android:background="@color/design_default_color_primary_dark"
         android:onClick="register"
         android:text="register"
+        android:textColor="@android:color/white"
         tools:text="register" />
 
     <Button
@@ -46,7 +60,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="86dp"
+        android:background="@color/design_default_color_primary_dark"
         android:onClick="login"
         android:text="login"
+        android:textColor="@android:color/white"
         tools:text="login" />
 </RelativeLayout>

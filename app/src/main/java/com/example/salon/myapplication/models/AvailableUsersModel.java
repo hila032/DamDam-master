@@ -19,4 +19,8 @@ public class AvailableUsersModel {
         availableUsers.child(id).removeValue();
     }
 
+
+    public static DatabaseReference getAvailableUsers() {
+        return availableUsers;
+    }
 }

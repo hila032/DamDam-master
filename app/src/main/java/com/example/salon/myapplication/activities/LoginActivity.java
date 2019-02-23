@@ -31,26 +31,7 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public final OnSuccessListener<AuthResult> ON_SUCCESS_LISTENER = new OnSuccessListener<AuthResult>() {
-        @Override
-        public void onSuccess(AuthResult authResult) {
 
-//            Toast.makeText(LoginActivity.this, "login success" + authResult.toString(), Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-//                mLoding.dismiss();
-                startActivity(intent);
-
-
-        }
-    };
-    public final OnFailureListener ON_FAILURE_LISTENER = new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception e) {
-            //mLoding.dismiss();
-//            Toast.makeText(LoginActivity.this, "login F" + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    };
     TextView registerUser;
     EditText username, password;
     Button loginButton;
@@ -64,17 +45,20 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.passwordLogin);
         loginButton = (Button) findViewById(R.id.loginButton);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            // User is signed in (getCurrentUser() will be null if not signed in)
+            Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
     }
 
-
     public void login(View view) {
-        UsersModel.login(username.getText().toString(), password.getText().toString(), ON_SUCCESS_LISTENER, ON_FAILURE_LISTENER);
-        final ProgressDialog mLoding = new ProgressDialog(LoginActivity.this);
-        mLoding.setTitle("Processing...");
-        mLoding.setMessage("Please wait...");
-        mLoding.setCancelable(false);
-        mLoding.setIndeterminate(true);
-        mLoding.show();
+        UsersModel.login(username.getText().toString(), password.getText().toString(), LoginActivity.this);
     }
 
 

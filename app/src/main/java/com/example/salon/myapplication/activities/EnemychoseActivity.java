@@ -11,10 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.salon.myapplication.EPlayer;
+import com.example.salon.myapplication.ESharedPreferences;
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.AvailableUsersModel;
 import com.example.salon.myapplication.models.DialogsModel;
+import com.example.salon.myapplication.models.IDataSnapshotOnChange;
 import com.example.salon.myapplication.models.InvitesModel;
+import com.example.salon.myapplication.models.RoomsModel;
+import com.example.salon.myapplication.models.SharedPreferencesModel;
 import com.example.salon.myapplication.models.UsersModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,46 +29,25 @@ import com.google.firebase.database.ValueEventListener;
 
 public class EnemychoseActivity extends AppCompatActivity {
 
-    private final DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference("Rooms");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enamychose);
-
+        SharedPreferencesModel.setIsInGame(false, this);
         // TODO: big refactor.
         // make the two loops - one line.
-        FirebaseDatabase.getInstance().getReference("Rooms").child(UsersModel.getId()).addValueEventListener(new ValueEventListener() {
+        RoomsModel.getRoom(UsersModel.getId()).child(EPlayer.PLAYER1.name()).child("id").addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean isInGame = SharedPreferencesModel.getIsInGame(EnemychoseActivity.this);
 
-                boolean isInGame = getSharedPreferences("state", Context.MODE_PRIVATE).getBoolean("isInGame", false);
                 if (dataSnapshot.getValue() != null && !isInGame) {
-                        Toast.makeText(EnemychoseActivity.this, "guyyhynb", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(EnemychoseActivity.this, GameActivity.class);
-
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                        intent.putExtra("id", UsersModel.getId());
-
-                        startActivity(intent);
-                    }
-                }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        InvitesModel.listenToInvitation(UsersModel.getId(), new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull final DataSnapshot otherIdSnapshot) {
-                if (otherIdSnapshot.getValue() != null) {
-                    DialogsModel.sendPlayerGameMassag(EnemychoseActivity.this, otherIdSnapshot, EnemychoseActivity.this);
-
+                    Intent intent = new Intent(EnemychoseActivity.this, GameActivity.class);
+                    intent.putExtra("id", UsersModel.getId());
+                    intent.putExtra("whoAmI", EPlayer.PLAYER1);
+                    startActivity(intent);
                 }
             }
 
@@ -73,33 +57,10 @@ public class EnemychoseActivity extends AppCompatActivity {
             }
         });
 
-        final ListView listView = (ListView) findViewById(R.id.enemysList);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listView.setAdapter(adapter);
-        FirebaseDatabase.getInstance().getReference("availableUsers").addValueEventListener(new ValueEventListener() {
+        InvitesModel.listenToInvitation(UsersModel.getId(), new IDataSnapshotOnChange() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot availableUsersDataSanpshot) {
-                adapter.clear();
-                for (DataSnapshot availableUserDataSnapshot : availableUsersDataSanpshot.getChildren()) {
-                    String id = availableUserDataSnapshot.getKey();
-                    if (!id.equals(UsersModel.getId())) {
-                        adapter.add(id);
-                    }
-//                    Toast.makeText(EnemychoseActivity.this, id, Toast.LENGTH_LONG).show();
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String idSecondPlayer = adapter.getItem(position);
-                            InvitesModel.addInvits(UsersModel.getId(), idSecondPlayer);
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void doAction(DataSnapshot otherIdSnapshot) {
+                DialogsModel.sendPlayerGameMassag(EnemychoseActivity.this, otherIdSnapshot, EnemychoseActivity.this);
             }
         });
     }
@@ -115,10 +76,5 @@ public class EnemychoseActivity extends AppCompatActivity {
         super.onStart();
         AvailableUsersModel.addUserToAvailableUsers(UsersModel.getId(), UsersModel.getEmail());
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background1"
     tools:context=".activities.LoginActivity">
 
     <Button
@@ -12,10 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginBottom="237dp"
-        android:text="Login"
+        android:layout_marginStart="139dp"
+        android:layout_marginBottom="230dp"
+        android:background="@color/design_default_color_primary_dark"
         android:onClick="login"
+        android:text="Login"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
         tools:text="Login" />
 
     <EditText
@@ -27,8 +31,9 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="153dp"
         android:ems="10"
+        android:hint="password"
         android:inputType="textPassword"
-        android:hint="password" />
+        android:textColor="@color/design_default_color_primary_dark" />
 
     <EditText
         android:id="@+id/usernameLogin"
@@ -40,7 +45,9 @@
         android:layout_marginTop="94dp"
         android:ems="10"
         android:hint="Email"
-        android:inputType="text" />
+        android:inputType="text"
+        android:shadowColor="@color/design_default_color_primary_dark"
+        android:textColor="@color/design_default_color_primary_dark" />
 
     <Button
         android:id="@+id/registerLogin"
@@ -48,10 +55,13 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/loginButton"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="-52dp"
-        android:layout_marginBottom="168dp"
-        android:text="Click here to register"
+        android:layout_marginStart="-129dp"
+        android:layout_marginBottom="148dp"
+        android:background="@color/design_default_color_primary_dark"
         android:onClick="register"
+        android:text="Click here to register"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
         tools:text="Click here to register" />
 
 </RelativeLayout>
