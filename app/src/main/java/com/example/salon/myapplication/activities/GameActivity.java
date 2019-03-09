@@ -54,7 +54,32 @@ public class GameActivity extends AppCompatActivity {
         playerName.setText(UsersModel.getNickname(this));
         Sound.setSound(this);
 
-
+//         Handler gameOverHandler = new Handler(){
+//
+//            @Override
+//            public void handleMessage(Message msg) {
+//
+//                String name = msg.getData().getString(Emassege.name.name());
+//                if (!name.equals(Emassege.tie.name())) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+//                    builder.setMessage("Game over, the winner is: " + name);
+//                    builder.setTitle("Game Over");
+//                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            Intent intent = new Intent(GameActivity.this, EnemychoseActivity.class);
+//                            startActivity(intent);
+//                        }
+//                    });
+//                    AlertDialog alert = builder.create();
+//                    alert.show();
+//                }
+//                else {
+//                    countDownTimer.start();
+//
+//                }
+//            }
+//        };
 
         RoomsModel.getRoom(roomId).addChildEventListener(new ChildEventListener() {
             @Override
@@ -65,7 +90,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                //Toast.makeText(GameActivity.this, "", Toast.LENGTH_SHORT).show();
+                if (!RoomsModel.isRoomExist(roomId)) {
+                    return;
+                }
+
+                String myCard = ((String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue());
+                String otherPlayerCard = ((String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue());
+                String winner = GameModel.getWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
+                Toast.makeText(this, winner, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -119,64 +151,13 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
-           check();
             RoomsModel.setPlayerValueInGame("", roomId, player);
 
 
         }
     };
 
-    private void check() {
 
-        RoomsModel.getRoom(roomId).addValueEventListener(new ValueEventListener() {
-
-            @Override
-
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!RoomsModel.isRoomExist(roomId)) {
-                    return;
-                }
-
-                String myCard = ((String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue());
-                String otherPlayerCard = ((String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue());
-                GameModel.getWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name(), gameOverHandler);
-
-
-                //Toast.makeText(GameActivity.this, "the winner is " + winner, Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
-    @SuppressLint("HandlerLeak")
-    Handler gameOverHandler = new Handler(){
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            String name = msg.getData().getString(Emassege.name.name());
-            if (!name.equals(Emassege.tie.name())) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-                builder.setMessage("Game over, the winner is: " + name);
-                builder.setTitle("Game Over");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(GameActivity.this, EnemychoseActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-            else {
-                    countDownTimer.start();
-
-            }
-        }
-    };
     @Override
     protected void onResume() {
         super.onResume();

@@ -1,17 +1,10 @@
 package com.example.salon.myapplication.models;
 
-import android.support.annotation.NonNull;
-import android.widget.Toast;
-
 import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.ERoom;
-import com.example.salon.myapplication.activities.GameActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import static com.example.salon.myapplication.EPlayer.PLAYER1;
 import static com.example.salon.myapplication.EPlayer.PLAYER2;
@@ -34,6 +27,11 @@ public class RoomsModel {
     public static void setPlayerValueInGame(String playerNewValueInGame , String roomId, EPlayer player){
         FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name()).setValue(playerNewValueInGame);
     }
+    public static DatabaseReference getPlayerValueInGame(String roomId, EPlayer player){
+        return FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name());
+
+    }
+
     public static boolean isRoomExist(String roomId){
         if (getRoom(roomId) != null){
             return true;
