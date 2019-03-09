@@ -116,4 +116,13 @@ public class ProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void DumRecords(View view) {
+        Intent intent = new Intent(this, RecordDumActivity.class);
+        startActivity(intent);
+    }
+
+    public void TicRecords(View view) {
+
+    }
 }

@@ -9,10 +9,11 @@
 
     <ImageView
         android:id="@+id/pic"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_width="153dp"
+        android:layout_height="145dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignEnd="@+id/gallary"
+        android:layout_marginEnd="147dp" />
 
     <Button
         android:id="@+id/BTNcmara"
@@ -20,8 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="37dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginBottom="22dp"
         android:onClick="picImage"
         android:text="cmara" />
 
@@ -40,9 +41,32 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/BTNcmara"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="63dp"
+        android:layout_marginEnd="255dp"
+        android:layout_marginBottom="58dp"
         android:onClick="onGallaryClick"
         android:text="gallary" />
+
+    <Button
+        android:id="@+id/DumRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/gallary"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="35dp"
+        android:onClick="DumRecords"
+        android:text="DumRecords" />
+
+    <Button
+        android:id="@+id/TicRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/gallary"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="41dp"
+        android:onClick="TicRecords"
+        android:text="TicRecords" />
 
 
 </RelativeLayout>

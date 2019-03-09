@@ -19,9 +19,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText mail, password, nikename;
-    Button registerButton;
-    TextView login;
+    private EditText mail, password, nikename;
+    private Button registerButton;
+    private TextView login;
     private static Context registerContext;
 
     public final OnFailureListener ON_FAILURE_LISTENER = new OnFailureListener() {
@@ -48,12 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = (Button) findViewById(R.id.registerButtonReg);
         login = (TextView) findViewById(R.id.loginReg);
         registerContext = getApplicationContext();
-
-
-
-
     }
-
 
     public void register(View view) {
         String name = nikename.getText().toString();

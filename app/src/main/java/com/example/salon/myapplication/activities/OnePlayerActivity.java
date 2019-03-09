@@ -1,18 +1,18 @@
-//package com.example.salon.myapplication.activities;
-//
-//import android.app.AlertDialog;
-//import android.app.ProgressDialog;
-//import android.os.CountDownTimer;
-//import android.support.v7.app.AppCompatActivity;
-//import android.os.Bundle;
-//import android.view.View;
-//
-//import com.example.salon.myapplication.R;
-//
-//import java.util.Random;
-//
-//public class OnePlayerActivity extends AppCompatActivity {
-//
+package com.example.salon.myapplication.activities;
+
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.os.CountDownTimer;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+
+import com.example.salon.myapplication.R;
+
+import java.util.Random;
+
+public class OnePlayerActivity extends AppCompatActivity {
+
 //    private String playerCard;
 //    private int reloodCounter = 0;
 //    AlertDialog.Builder ErorMasaage = new AlertDialog.Builder(this);
@@ -75,4 +75,4 @@
 //
 //    }
 //
-//}
+}

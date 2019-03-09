@@ -23,9 +23,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
             android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:layoutDirection="ltr">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,18 +36,25 @@
         </activity>
         <activity
             android:name=".activities.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:layoutDirection="ltr"/>
         <activity
             android:name=".activities.WelcomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:layoutDirection="ltr"/>
         <activity
             android:name=".activities.EnemychoseActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:layoutDirection="ltr"/>
         <activity
             android:name=".activities.GameActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.OnePlayerActivity"></activity>
+            android:screenOrientation="portrait"
+            android:layoutDirection="ltr"/>
+        <activity android:name=".activities.ProfileActivity"
+            android:layoutDirection="ltr"/>
+        <activity android:name=".activities.OnePlayerActivity"
+            android:layoutDirection="ltr"/>
+        <activity android:name=".activities.RecordDumActivity"></activity>
     </application>
 
 </manifest>

@@ -11,7 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.salon.myapplication.EIntant;
 import com.example.salon.myapplication.EPlayer;
+import com.example.salon.myapplication.ERoom;
 import com.example.salon.myapplication.ESharedPreferences;
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.AvailableUsersModel;
@@ -37,7 +39,7 @@ public class EnemychoseActivity extends AppCompatActivity {
         SharedPreferencesModel.setIsInGame(false, this);
         // TODO: big refactor.
         // make the two loops - one line.
-        RoomsModel.getRoom(UsersModel.getId()).child(EPlayer.PLAYER1.name()).child("id").addValueEventListener(new ValueEventListener() {
+        RoomsModel.getRoom(UsersModel.getId()).child(EPlayer.PLAYER1.name()).child(ERoom.id.name()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -45,8 +47,8 @@ public class EnemychoseActivity extends AppCompatActivity {
 
                 if (dataSnapshot.getValue() != null && !isInGame) {
                     Intent intent = new Intent(EnemychoseActivity.this, GameActivity.class);
-                    intent.putExtra("id", UsersModel.getId());
-                    intent.putExtra("whoAmI", EPlayer.PLAYER1);
+                    intent.putExtra(EIntant.id.name(), UsersModel.getId());
+                    intent.putExtra(EIntant.whoAmI.name(), EPlayer.PLAYER1);
                     startActivity(intent);
                 }
             }
