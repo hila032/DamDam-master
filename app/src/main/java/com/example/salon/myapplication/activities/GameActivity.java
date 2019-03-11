@@ -89,15 +89,15 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+// herre has a problem
+                if (RoomsModel.isRoomExist(roomId)) {
 
-                if (!RoomsModel.isRoomExist(roomId)) {
-                    return;
+                    String myCard = (String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue();
+                    String otherPlayerCard = (String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue();
+                    String winner = GameModel.getWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
+                    Toast.makeText(GameActivity.this, winner, Toast.LENGTH_SHORT).show();
+
                 }
-
-                String myCard = ((String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue());
-                String otherPlayerCard = ((String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue());
-                String winner = GameModel.getWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
-                Toast.makeText(this, winner, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -139,7 +139,7 @@ public class GameActivity extends AppCompatActivity {
         vibrator.vibrate(300);
         Sound.playRelood();
     }
-
+// herre has a problem
     CountDownTimer  countDownTimer = new CountDownTimer(5000,1000) {
 
         @Override

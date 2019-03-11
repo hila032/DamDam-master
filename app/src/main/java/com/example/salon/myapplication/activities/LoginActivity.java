@@ -32,9 +32,9 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
 
-    TextView registerUser;
-    EditText username, password;
-    Button loginButton;
+    private TextView registerUser;
+    private EditText username, password;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
