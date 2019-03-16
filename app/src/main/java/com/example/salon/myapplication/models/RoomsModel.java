@@ -13,8 +13,8 @@ public class RoomsModel {
 
     public static void addRoom(String id, String otherPlayerId, OnCompleteListener<Void> onCompleteGoToGameActivity){
         DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name());
-        roomsReference.child(id).child(PLAYER1.name()).child(ERoom.card.name()).setValue("");
-        roomsReference.child(id).child(PLAYER2.name()).child(ERoom.card.name()).setValue("");
+//        roomsReference.child(id).child(PLAYER1.name()).child(ERoom.card.name()).setValue(null);
+//        roomsReference.child(id).child(PLAYER2.name()).child(ERoom.card.name()).setValue(null);
         roomsReference.child(id).child(PLAYER1.name()).child(ERoom.id.name()).setValue(id);
         roomsReference.child(id).child(PLAYER2.name()).child(ERoom.id.name()).setValue(otherPlayerId)
                 .addOnCompleteListener(onCompleteGoToGameActivity);
@@ -27,11 +27,9 @@ public class RoomsModel {
     public static void setPlayerValueInGame(String playerNewValueInGame , String roomId, EPlayer player){
         FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name()).setValue(playerNewValueInGame);
     }
-    public static DatabaseReference getPlayerValueInGame(String roomId, EPlayer player){
-        return FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name());
-
+    public static void removeCard(String roomId, EPlayer player){
+        FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name()).removeValue();
     }
-
     public static boolean isRoomExist(String roomId){
         if (getRoom(roomId) != null){
             return true;

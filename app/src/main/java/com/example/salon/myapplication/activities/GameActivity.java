@@ -1,116 +1,74 @@
 package com.example.salon.myapplication.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
+import android.graphics.Color;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.salon.myapplication.EDumGame;
 import com.example.salon.myapplication.EIntant;
 import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.ERoom;
-import com.example.salon.myapplication.Emassege;
 import com.example.salon.myapplication.R;
+import com.example.salon.myapplication.models.Dialogs;
 import com.example.salon.myapplication.models.GameModel;
 import com.example.salon.myapplication.models.RoomsModel;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
 import com.example.salon.myapplication.models.Sound;
-import com.example.salon.myapplication.models.UsersModel;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class GameActivity extends AppCompatActivity {
 
+    private TextView TVreloodCounter;
     private Vibrator vibrator;
     private String roomId;
     private int reloodCounter = 0;
-    private TextView timmer;
-    private static int timerSec = 3;
     private EPlayer player;
     private TextView playerName;
+    private ImageButton shoot, relood, defance;
+    private String myCard;
+    private ValueEventListener changeCardListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         roomId = (String) this.getIntent().getExtras().get(EIntant.id.name());
         player = (EPlayer) this.getIntent().getExtras().get(EIntant.whoAmI.name());
-        timmer = (TextView) findViewById(R.id.timer);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         playerName = (TextView) findViewById(R.id.playerName);
-        playerName.setText(UsersModel.getNickname(this));
+        playerName.setText(player.name());
+        shoot = (ImageButton) findViewById(R.id.BTNgun);
+        relood = (ImageButton) findViewById(R.id.BTNammuo);
+        defance = (ImageButton) findViewById(R.id.BTNshild);
+        TVreloodCounter = (TextView) findViewById(R.id.reloodCounter);
         Sound.setSound(this);
-
-//         Handler gameOverHandler = new Handler(){
-//
-//            @Override
-//            public void handleMessage(Message msg) {
-//
-//                String name = msg.getData().getString(Emassege.name.name());
-//                if (!name.equals(Emassege.tie.name())) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-//                    builder.setMessage("Game over, the winner is: " + name);
-//                    builder.setTitle("Game Over");
-//                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            Intent intent = new Intent(GameActivity.this, EnemychoseActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    });
-//                    AlertDialog alert = builder.create();
-//                    alert.show();
-//                }
-//                else {
-//                    countDownTimer.start();
-//
-//                }
-//            }
-//        };
-
-        RoomsModel.getRoom(roomId).addChildEventListener(new ChildEventListener() {
+        enableShoot();
+        changeCardListener = new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-// herre has a problem
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (RoomsModel.isRoomExist(roomId)) {
 
-                    String myCard = (String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue();
+                    myCard = (String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue();
                     String otherPlayerCard = (String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue();
-                    String winner = GameModel.getWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
-                    Toast.makeText(GameActivity.this, winner, Toast.LENGTH_SHORT).show();
+
+                    if (myCard == null || otherPlayerCard == null) {
+                        return;
+                    }
+
+                    handleWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
+                    if (myCard != null && otherPlayerCard != null) {
+                        RoomsModel.removeCard(roomId,player);
+                    }
 
                 }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
-                    finish();
-
-                }
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
             }
 
             @Override
@@ -118,44 +76,85 @@ public class GameActivity extends AppCompatActivity {
 
             }
 
-        });
-        countDownTimer.start();
+        };
+        RoomsModel.getRoom(roomId).addValueEventListener(changeCardListener);
+//        enableClikes(true);
+
+    }
+    public void handleWinner(String myCard, String myName, String otherPlayerCard, String otherPlayerName){
+        if (myCard.equals(EDumGame.shoot.name())&& reloodCounter > 0) {
+            if (myCard.equals(EDumGame.shoot.name()) && otherPlayerCard.equals(EDumGame.relood.name())) { // other player defend or shoot
+                //Toast.makeText(this, "the winner is: " + myName, LENGTH_SHORT).show();
+                RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
+                Dialogs.endGame(this, myName);
+
+
+            }
+            reloodCounter--;
+            enableShoot();
+            TVreloodCounter.setText(String.valueOf(reloodCounter));
+        }
+        if (otherPlayerCard.equals(EDumGame.shoot.name()) && myCard.equals(EDumGame.relood.name())) { // this player defend or shoot
+            //Toast.makeText(this, "the winner is: " + otherPlayerName, LENGTH_SHORT).show();
+            RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
+            Dialogs.endGame(this, otherPlayerName);
+
+        }
+
+        if (myCard.equals(EDumGame.relood.name())) {
+            reloodCounter++;
+            TVreloodCounter.setText(String.valueOf(reloodCounter));
+            enableShoot();
+
+
+        }
+
 
     }
 
-
+    public void enableClikes(boolean isNeedToEnabled){
+        if (reloodCounter <= 0){
+            shoot.setEnabled(false);
+            shoot.setVisibility(View.INVISIBLE);
+        }
+        else {
+            shoot.setEnabled(true);
+            shoot.setVisibility(View.VISIBLE);
+        }
+        shoot.setEnabled(isNeedToEnabled);
+        relood.setEnabled(isNeedToEnabled);
+        defance.setEnabled(isNeedToEnabled);
+    }
+    public void enableShoot() {
+        if (reloodCounter <= 0) {
+            shoot.setEnabled(false);
+            shoot.setVisibility(View.INVISIBLE);
+        } else {
+            shoot.setEnabled(true);
+            shoot.setVisibility(View.VISIBLE);
+        }
+    }
     public void shoot(View view) {
-        RoomsModel.setPlayerValueInGame(EDumGame.shoot.name(), roomId, player);
+        GameModel.shoot(roomId, player);
         vibrator.vibrate(300);
         Sound.playGunhoot();
+//        enableClikes(false);
+
+
     }
     public void defance(View view) {
-        RoomsModel.setPlayerValueInGame(EDumGame.defance.name(), roomId, player);
+        GameModel.defance(roomId,player);
         vibrator.vibrate(300);
+//        enableClikes(false);
+        //todo: add sound
 
     }
     public void relood(View view) {
-        RoomsModel.setPlayerValueInGame(EDumGame.relood.name(), roomId, player);
+        GameModel.relood(roomId,player);
         vibrator.vibrate(300);
         Sound.playRelood();
+//        enableClikes(false);
     }
-// herre has a problem
-    CountDownTimer  countDownTimer = new CountDownTimer(5000,1000) {
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-
-            timmer.setText(String.valueOf(millisUntilFinished/1000));
-
-        }
-
-        @Override
-        public void onFinish() {
-            RoomsModel.setPlayerValueInGame("", roomId, player);
-
-
-        }
-    };
 
 
     @Override
@@ -168,6 +167,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         SharedPreferencesModel.setIsInGame(false, this);
+        RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
         RoomsModel.removeRoom(roomId);
 
     }
