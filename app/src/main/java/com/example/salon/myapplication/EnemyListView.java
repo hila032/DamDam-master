@@ -32,7 +32,7 @@ public class EnemyListView extends ListView {
     }
 
     private void createAdapter(Context context){
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
+        final ArrayAdapter<OtherPlayerInfo> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
         this.setAdapter(adapter);
         AvailableUsersModel.getAvailableUsers().addValueEventListener(new ValueEventListener() {
             @Override
@@ -40,15 +40,16 @@ public class EnemyListView extends ListView {
                 adapter.clear();
                 for (DataSnapshot availableUserDataSnapshot : availableUsersDataSanpshot.getChildren()) {
                     String id = availableUserDataSnapshot.getKey();
+                    String email = availableUserDataSnapshot.getValue().toString();
                     if (!id.equals(UsersModel.getId())) {
-                        adapter.add(id);
+
+                        adapter.add(new OtherPlayerInfo(id, email));
                     }
 
                     EnemyListView.this.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String idSecondPlayer = adapter.getItem(position);
-                            InvitesModel.addInvits(UsersModel.getId(), idSecondPlayer);
+                            InvitesModel.addInvits(UsersModel.getId(), adapter.getItem(position).getId());
 
 
                         }
@@ -62,5 +63,36 @@ public class EnemyListView extends ListView {
             }
         });
     }
+    class OtherPlayerInfo{
+        private String id;
+        private String email;
 
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        @Override
+        public String toString() {
+            return email;
+        }
+
+        public OtherPlayerInfo(String id, String email) {
+
+            this.id = id;
+            this.email = email;
+        }
+    }
 }
+

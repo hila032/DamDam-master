@@ -41,13 +41,12 @@
         app:srcCompat="@drawable/shells" />
 
     <TextView
-        android:id="@+id/timer"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:id="@+id/stutos"
+        android:layout_width="175dp"
+        android:layout_height="67dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:text="TextView"
+        android:layout_marginTop="37dp"
+        android:layout_toEndOf="@+id/playerName"
         android:textColor="@android:color/white"
         android:textSize="30sp" />
 

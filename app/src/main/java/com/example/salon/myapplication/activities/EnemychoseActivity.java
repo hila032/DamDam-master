@@ -28,8 +28,7 @@ public class EnemychoseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enamychose);
         SharedPreferencesModel.setIsInGame(false, this);
-        // TODO: big refactor.
-        // make the two loops - one line.
+
         RoomsModel.getRoom(UsersModel.getId()).child(EPlayer.PLAYER1.name()).child(ERoom.id.name()).addValueEventListener(new ValueEventListener() {
 
             @Override

@@ -27,7 +27,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class UsersModel {
     private static FirebaseAuth auth = FirebaseAuth.getInstance();
-
+    private static String otherid;
+    private static String otherEmail;
 
 
     public static void register(Context context, String username, String password, String nickname, OnSuccessListener<AuthResult> onSuccessListener, OnFailureListener onFailureListener){

@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class GameActivity extends AppCompatActivity {
 
-    private TextView TVreloodCounter;
+    private TextView TVreloodCounter, stutos;
     private Vibrator vibrator;
     private String roomId;
     private int reloodCounter = 0;
@@ -44,6 +44,7 @@ public class GameActivity extends AppCompatActivity {
         player = (EPlayer) this.getIntent().getExtras().get(EIntant.whoAmI.name());
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         playerName = (TextView) findViewById(R.id.playerName);
+        stutos = (TextView) findViewById(R.id.stutos);
         playerName.setText(player.name());
         shoot = (ImageButton) findViewById(R.id.BTNgun);
         relood = (ImageButton) findViewById(R.id.BTNammuo);
@@ -51,6 +52,8 @@ public class GameActivity extends AppCompatActivity {
         TVreloodCounter = (TextView) findViewById(R.id.reloodCounter);
         Sound.setSound(this);
         enableShoot();
+        TVreloodCounter.setText("0");
+        enableClikes(true);
         changeCardListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -60,9 +63,15 @@ public class GameActivity extends AppCompatActivity {
                     String otherPlayerCard = (String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue();
 
                     if (myCard == null || otherPlayerCard == null) {
+                        if(myCard == null){
+                            stutos.setText("whiting for your choice");
+                        }
+                        if(myCard != null && otherPlayerCard == null){
+                            stutos.setText("whiting for other player choice");
+                        }
                         return;
                     }
-
+                    enableClikes(true);
                     handleWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
                     if (myCard != null && otherPlayerCard != null) {
                         RoomsModel.removeCard(roomId,player);
@@ -113,14 +122,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void enableClikes(boolean isNeedToEnabled){
-        if (reloodCounter <= 0){
-            shoot.setEnabled(false);
-            shoot.setVisibility(View.INVISIBLE);
-        }
-        else {
-            shoot.setEnabled(true);
-            shoot.setVisibility(View.VISIBLE);
-        }
         shoot.setEnabled(isNeedToEnabled);
         relood.setEnabled(isNeedToEnabled);
         defance.setEnabled(isNeedToEnabled);
@@ -138,14 +139,14 @@ public class GameActivity extends AppCompatActivity {
         GameModel.shoot(roomId, player);
         vibrator.vibrate(300);
         Sound.playGunhoot();
-//        enableClikes(false);
+        enableClikes(false);
 
 
     }
     public void defance(View view) {
         GameModel.defance(roomId,player);
         vibrator.vibrate(300);
-//        enableClikes(false);
+        enableClikes(false);
         //todo: add sound
 
     }
@@ -153,7 +154,7 @@ public class GameActivity extends AppCompatActivity {
         GameModel.relood(roomId,player);
         vibrator.vibrate(300);
         Sound.playRelood();
-//        enableClikes(false);
+        enableClikes(false);
     }
 
 
