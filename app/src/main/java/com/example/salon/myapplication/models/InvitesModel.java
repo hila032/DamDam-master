@@ -33,4 +33,6 @@ public class InvitesModel {
         FirebaseDatabase.getInstance().getReference("invites").child(otherId).setValue(id);
     }
 
+
+
 }

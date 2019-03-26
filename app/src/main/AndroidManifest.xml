@@ -56,7 +56,8 @@
             android:name=".activities.OnePlayerActivity"
             android:layoutDirection="ltr" />
         <activity android:name=".activities.RecordDumActivity" />
-        <activity android:name=".activities.TicTacGameActivity"></activity>
+        <activity android:name=".activities.TicTacGameActivity" />
+        <activity android:name=".activities.TicTacEnemyChoseActivity"></activity>
     </application>
 
 </manifest>

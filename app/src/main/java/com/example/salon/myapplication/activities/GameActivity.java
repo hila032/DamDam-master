@@ -1,6 +1,9 @@
 package com.example.salon.myapplication.activities;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
@@ -54,6 +57,7 @@ public class GameActivity extends AppCompatActivity {
         enableShoot();
         TVreloodCounter.setText("0");
         enableClikes(true);
+
         changeCardListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -99,23 +103,25 @@ public class GameActivity extends AppCompatActivity {
 
 
             }
+            Dialogs.tie(this,myCard,otherPlayerCard);
             reloodCounter--;
             enableShoot();
             TVreloodCounter.setText(String.valueOf(reloodCounter));
         }
-        if (otherPlayerCard.equals(EDumGame.shoot.name()) && myCard.equals(EDumGame.relood.name())) { // this player defend or shoot
+        else if (otherPlayerCard.equals(EDumGame.shoot.name()) && myCard.equals(EDumGame.relood.name())) { // this player defend or shoot
             //Toast.makeText(this, "the winner is: " + otherPlayerName, LENGTH_SHORT).show();
             RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
             Dialogs.endGame(this, otherPlayerName);
 
+        }
+        else {
+            Dialogs.tie(this,myCard,otherPlayerCard);
         }
 
         if (myCard.equals(EDumGame.relood.name())) {
             reloodCounter++;
             TVreloodCounter.setText(String.valueOf(reloodCounter));
             enableShoot();
-
-
         }
 
 
@@ -141,7 +147,6 @@ public class GameActivity extends AppCompatActivity {
         Sound.playGunhoot();
         enableClikes(false);
 
-
     }
     public void defance(View view) {
         GameModel.defance(roomId,player);
@@ -157,7 +162,6 @@ public class GameActivity extends AppCompatActivity {
         enableClikes(false);
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -170,6 +174,5 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferencesModel.setIsInGame(false, this);
         RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
         RoomsModel.removeRoom(roomId);
-
     }
 }

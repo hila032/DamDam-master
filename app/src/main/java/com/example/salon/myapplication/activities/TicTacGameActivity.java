@@ -8,19 +8,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.salon.myapplication.EIntant;
+import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.GameController;
 
 public class TicTacGameActivity extends AppCompatActivity {
     private GameController gameController;
-    LinearLayout l;
-    TextView textView;
-    TextView ViewScore;
+    private LinearLayout l;
+    private TextView textView;
+    private TextView ViewScore;
+
+    private EPlayer player;
+    private String roomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_game);
+
+        roomId = (String) this.getIntent().getExtras().get(EIntant.id.name());
+        player = (EPlayer) this.getIntent().getExtras().get(EIntant.whoAmI.name());
+
+
         gameController = new GameController();
 
         l = (LinearLayout)findViewById(R.id.Llmain);

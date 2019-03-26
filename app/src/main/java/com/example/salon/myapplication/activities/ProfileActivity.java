@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.salon.myapplication.R;
+import com.example.salon.myapplication.models.SharedPreferencesModel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,10 +35,14 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkAndReqeustPremissions();
         setContentView(R.layout.activity_profile);
+
+        checkAndReqeustPremissions();
         pic = (ImageView) findViewById(R.id.pic);
-        loadProfileImage(imageName);
+        String name = SharedPreferencesModel.getPicName(this);
+        if (!name.equals("")){
+            loadProfileImage(imageName);
+        }
     }
 
     String[] premissions = new String[]{
@@ -78,18 +83,21 @@ public class ProfileActivity extends AppCompatActivity {
             imageBitmap = (Bitmap) data.getExtras().get("data");
             pic.setImageBitmap(imageBitmap);
             privateAddPic();
+            SharedPreferencesModel.seyPicName(imageName);
         }
         if (requestCode == SELCT_PHOTO && resultCode == RESULT_OK) {
-            Uri Selected_Image_Uri = data.getData();
-            pic.setImageURI(Selected_Image_Uri);
+            imageBitmap = (Bitmap) data.getExtras().get("data");
+            pic.setImageBitmap(imageBitmap);
+            privateAddPic();
+            SharedPreferencesModel.seyPicName(imageName);
 
         }
-
     }
 
     private void privateAddPic() {
         FileOutputStream fileOutputStream = null;
         try {
+
             fileOutputStream = openFileOutput(imageName, Context.MODE_PRIVATE);
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
 
@@ -103,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void loadProfileImage(String name) {
-        FileInputStream fileInputStream;
+        FileInputStream fileInputStream = null;
         Bitmap bitmap = null;
         try {
             fileInputStream = openFileInput(name);
