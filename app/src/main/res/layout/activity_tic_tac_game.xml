@@ -21,11 +21,13 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:tag="0"
+            android:layoutDirection="ltr"
             android:weightSum="3">
 
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/b00"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -36,7 +38,7 @@
                 android:textSize="36sp" />
 
             <Button
-                android:id="@+id/button10"
+                android:id="@+id/b01"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,7 +48,7 @@
                 android:textSize="36sp" />
 
             <Button
-                android:id="@+id/button9"
+                android:id="@+id/b02"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -55,122 +57,85 @@
                 android:text=""
                 android:textSize="36sp" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="changeText"
-                    android:text=""
-                    android:textSize="36sp" />
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="changeText"
-                    android:text=""
-                    android:textSize="36sp" />
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="changeText"
-                    android:text=""
-                    android:textSize="36sp" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="changeText"
-                android:text=""
-                android:textSize="36sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:layoutDirection="ltr"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:tag="1"
             android:weightSum="3">
 
             <Button
+                android:id="@+id/b10"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="changeText"
-                android:tag="3"
+                android:tag="0"
                 android:text=""
                 android:textSize="36sp" />
 
             <Button
+                android:id="@+id/b11"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="changeText"
-                android:tag="4"
+                android:tag="1"
                 android:text=""
                 android:textSize="36sp" />
 
             <Button
+                android:id="@+id/b12"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="changeText"
-                android:tag="5"
+                android:tag="2"
                 android:text=""
                 android:textSize="36sp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:layoutDirection="ltr"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:tag="2"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/b20"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="changeText"
-                android:tag="6"
+                android:tag="0"
                 android:text=""
                 android:textSize="36sp" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/b21"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="changeText"
-                android:tag="7"
+                android:tag="1"
                 android:text=""
                 android:textSize="36sp" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/b22"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="changeText"
-                android:tag="8"
+                android:tag="2"
                 android:text=""
                 android:textSize="36sp" />
         </LinearLayout>

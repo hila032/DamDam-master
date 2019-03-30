@@ -1,10 +1,6 @@
 package com.example.salon.myapplication.activities;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,15 +15,15 @@ import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.ERoom;
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.Dialogs;
-import com.example.salon.myapplication.models.GameModel;
-import com.example.salon.myapplication.models.RoomsModel;
+import com.example.salon.myapplication.models.DumDumGameModel;
+import com.example.salon.myapplication.models.DumDumRoomsModel;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
 import com.example.salon.myapplication.models.Sound;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class GameActivity extends AppCompatActivity {
+public class DunDumGameActivity extends AppCompatActivity {
 
     private TextView TVreloodCounter, stutos;
     private Vibrator vibrator;
@@ -61,7 +57,7 @@ public class GameActivity extends AppCompatActivity {
         changeCardListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (RoomsModel.isRoomExist(roomId)) {
+                if (DumDumRoomsModel.isRoomExist(roomId)) {
 
                     myCard = (String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue();
                     String otherPlayerCard = (String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue();
@@ -78,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
                     enableClikes(true);
                     handleWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
                     if (myCard != null && otherPlayerCard != null) {
-                        RoomsModel.removeCard(roomId,player);
+                        DumDumRoomsModel.removeCard(roomId,player);
                     }
 
                 }
@@ -90,15 +86,15 @@ public class GameActivity extends AppCompatActivity {
             }
 
         };
-        RoomsModel.getRoom(roomId).addValueEventListener(changeCardListener);
+        DumDumRoomsModel.getRoom(roomId).addValueEventListener(changeCardListener);
 //        enableClikes(true);
 
     }
     public void handleWinner(String myCard, String myName, String otherPlayerCard, String otherPlayerName){
         if (myCard.equals(EDumGame.shoot.name())&& reloodCounter > 0) {
             if (myCard.equals(EDumGame.shoot.name()) && otherPlayerCard.equals(EDumGame.relood.name())) { // other player defend or shoot
-                //Toast.makeText(this, "the winner is: " + myName, LENGTH_SHORT).show();
-                RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
+                //Toast.makeText(this, "the getWinner is: " + myName, LENGTH_SHORT).show();
+                DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
                 Dialogs.endGame(this, myName);
 
 
@@ -109,8 +105,8 @@ public class GameActivity extends AppCompatActivity {
             TVreloodCounter.setText(String.valueOf(reloodCounter));
         }
         else if (otherPlayerCard.equals(EDumGame.shoot.name()) && myCard.equals(EDumGame.relood.name())) { // this player defend or shoot
-            //Toast.makeText(this, "the winner is: " + otherPlayerName, LENGTH_SHORT).show();
-            RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
+            //Toast.makeText(this, "the getWinner is: " + otherPlayerName, LENGTH_SHORT).show();
+            DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
             Dialogs.endGame(this, otherPlayerName);
 
         }
@@ -123,8 +119,6 @@ public class GameActivity extends AppCompatActivity {
             TVreloodCounter.setText(String.valueOf(reloodCounter));
             enableShoot();
         }
-
-
     }
 
     public void enableClikes(boolean isNeedToEnabled){
@@ -142,21 +136,21 @@ public class GameActivity extends AppCompatActivity {
         }
     }
     public void shoot(View view) {
-        GameModel.shoot(roomId, player);
+        DumDumGameModel.shoot(roomId, player);
         vibrator.vibrate(300);
         Sound.playGunhoot();
         enableClikes(false);
 
     }
     public void defance(View view) {
-        GameModel.defance(roomId,player);
+        DumDumGameModel.defance(roomId,player);
         vibrator.vibrate(300);
         enableClikes(false);
         //todo: add sound
 
     }
     public void relood(View view) {
-        GameModel.relood(roomId,player);
+        DumDumGameModel.relood(roomId,player);
         vibrator.vibrate(300);
         Sound.playRelood();
         enableClikes(false);
@@ -172,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         SharedPreferencesModel.setIsInGame(false, this);
-        RoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
-        RoomsModel.removeRoom(roomId);
+        DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
+        DumDumRoomsModel.removeRoom(roomId);
     }
 }

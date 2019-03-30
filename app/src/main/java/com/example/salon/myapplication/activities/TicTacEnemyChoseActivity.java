@@ -7,14 +7,13 @@ import android.os.Bundle;
 
 import com.example.salon.myapplication.EIntant;
 import com.example.salon.myapplication.EPlayer;
-import com.example.salon.myapplication.ERoom;
 import com.example.salon.myapplication.R;
-import com.example.salon.myapplication.models.AvailableUsersModel;
 import com.example.salon.myapplication.models.Dialogs;
 import com.example.salon.myapplication.models.IDataSnapshotOnChange;
 import com.example.salon.myapplication.models.InvitesModel;
-import com.example.salon.myapplication.models.RoomsModel;
+import com.example.salon.myapplication.models.TicTacModle;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
+import com.example.salon.myapplication.models.TicTacAvailableUsersModle;
 import com.example.salon.myapplication.models.UsersModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +27,7 @@ public class TicTacEnemyChoseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tic_tac_enemy_chose);
         SharedPreferencesModel.setIsInGame(false, this);
 
-        RoomsModel.getTicTactRoom(UsersModel.getId()).addValueEventListener(new ValueEventListener() {
+        TicTacModle.getTicTactRoom(UsersModel.getId()).child(EPlayer.PLAYER1.name()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -59,13 +58,13 @@ public class TicTacEnemyChoseActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        AvailableUsersModel.removeUser(UsersModel.getId());
+        TicTacAvailableUsersModle.removeTicTacUser(UsersModel.getId());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        AvailableUsersModel.addUserToAvailableUsers(UsersModel.getId(), UsersModel.getEmail());
+        TicTacAvailableUsersModle.addTicTacUserToAvailableUsers(UsersModel.getId(), UsersModel.getEmail());
 
     }
 }

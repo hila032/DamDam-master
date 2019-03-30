@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    tools:context=".activities.WelcomeActivity">
+
+    <Button
+        android:id="@+id/playNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="168dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:onClick="userList"
+        android:text="play now"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/playNow"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="93dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:onClick="profile"
+        android:text="profile"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/playNow"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="29dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:text="Button"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="385dp"
+        android:layout_height="123dp"
+        android:layout_alignStart="@+id/playNow"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-148dp"
+        android:layout_marginTop="56dp"
+        android:text="Dam Dam chichen"
+        android:textColor="?attr/colorError"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/emailWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="129dp"
+        android:text="TextView"
+        android:textColor="?attr/colorError"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="147dp"
+        android:layout_marginTop="220dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:onClick="logout"
+        android:text="logout"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/BTNshare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="21dp"
+        android:text="share" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/emailWelcome"
+        android:layout_centerVertical="true"
+        android:onClick="ticTac"
+        android:text="Button" />
+
+</RelativeLayout>

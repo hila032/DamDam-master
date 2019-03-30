@@ -8,25 +8,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.salon.myapplication.models.AvailableUsersModel;
+import com.example.salon.myapplication.models.DumDumAvailableUsersModel;
 import com.example.salon.myapplication.models.InvitesModel;
 import com.example.salon.myapplication.models.UsersModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class EnemyListView extends ListView {
-    public EnemyListView(Context context) {
+public class DumDumEnemyListView extends ListView {
+    public DumDumEnemyListView(Context context) {
         super(context);
         createAdapter(context);
     }
 
-    public EnemyListView(Context context, AttributeSet attrs) {
+    public DumDumEnemyListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         createAdapter(context);
     }
 
-    public EnemyListView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DumDumEnemyListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         createAdapter(context);
     }
@@ -34,7 +34,7 @@ public class EnemyListView extends ListView {
     private void createAdapter(Context context){
         final ArrayAdapter<OtherPlayerInfo> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
         this.setAdapter(adapter);
-        AvailableUsersModel.getAvailableUsers().addValueEventListener(new ValueEventListener() {
+        DumDumAvailableUsersModel.getDumDumAvailableUsers().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot availableUsersDataSanpshot) {
                 adapter.clear();
@@ -46,7 +46,7 @@ public class EnemyListView extends ListView {
                         adapter.add(new OtherPlayerInfo(id, email));
                     }
 
-                    EnemyListView.this.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    DumDumEnemyListView.this.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             InvitesModel.addInvits(UsersModel.getId(), adapter.getItem(position).getId());

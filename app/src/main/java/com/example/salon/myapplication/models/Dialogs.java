@@ -14,8 +14,7 @@ import com.example.salon.myapplication.EDumGame;
 import com.example.salon.myapplication.EIntant;
 import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.R;
-import com.example.salon.myapplication.activities.EnemychoseActivity;
-import com.example.salon.myapplication.activities.GameActivity;
+import com.example.salon.myapplication.activities.DunDumGameActivity;
 import com.example.salon.myapplication.activities.TicTacGameActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,13 +42,13 @@ public class Dialogs {
                         OnCompleteListener<Void> onCompleteGoToGameActivity = new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Intent intent = new Intent (correntActivity, GameActivity.class);
+                                Intent intent = new Intent (correntActivity, DunDumGameActivity.class);
                                 intent.putExtra(EIntant.id.name(), otherIdSnapshot.getValue().toString());
                                 intent.putExtra(EIntant.whoAmI.name(), EPlayer.PLAYER2);
                                 correntActivity.startActivity(intent);
                             }
                         };
-                        RoomsModel.addRoom((String) otherIdSnapshot.getValue(), UsersModel.getId(), onCompleteGoToGameActivity);
+                        DumDumRoomsModel.addRoom((String) otherIdSnapshot.getValue(), UsersModel.getId(), onCompleteGoToGameActivity);
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -57,7 +56,7 @@ public class Dialogs {
     }
     public static void endGame(final Activity correntActivity, String player){
         AlertDialog.Builder builder = new AlertDialog.Builder(correntActivity);
-        builder.setMessage("Game over, the winner is: " + player);
+        builder.setMessage("Game over, the getWinner is: " + player);
         builder.setTitle("Game Over");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -135,7 +134,7 @@ public class Dialogs {
                                 correntActivity.startActivity(intent);
                             }
                         };
-                        RoomsModel.addTicTacRoom(UsersModel.getId(), (String) otherIdSnapshot.getValue(), onCompleteGoToTicTacGameActivity);
+                        TicTacModle.addTicTacRoom(UsersModel.getId(),(String) otherIdSnapshot.getValue(),(String) otherIdSnapshot.getValue(), onCompleteGoToTicTacGameActivity);
                     }
                 });
         AlertDialog dialog = builder.create();

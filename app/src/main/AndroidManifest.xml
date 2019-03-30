@@ -42,11 +42,11 @@
             android:layoutDirection="ltr"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.EnemychoseActivity"
+            android:name=".activities.DumDumEnemyChoseActivity"
             android:layoutDirection="ltr"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.GameActivity"
+            android:name=".activities.DunDumGameActivity"
             android:layoutDirection="ltr"
             android:screenOrientation="portrait" />
         <activity

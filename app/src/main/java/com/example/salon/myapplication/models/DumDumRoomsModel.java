@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import static com.example.salon.myapplication.EPlayer.PLAYER1;
 import static com.example.salon.myapplication.EPlayer.PLAYER2;
 
-public class RoomsModel {
+public class DumDumRoomsModel {
 
     public static void addRoom(String id, String otherPlayerId, OnCompleteListener<Void> onCompleteGoToGameActivity){
         DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name());
@@ -39,32 +39,5 @@ public class RoomsModel {
         getRoom(roomId).removeValue();
     }
 
-
-    // tic tac modle
-    public static void addTicTacRoom (String roomId, String otherPlayerId, OnCompleteListener<Void> onCompleteGoToTicTacGameActivity){
-        DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId);
-       for (int i = 0; i<8; i++){
-           roomsReference.child(i + "").setValue("E");
-       }
-        roomsReference.child("8").setValue("E")
-            .addOnCompleteListener(onCompleteGoToTicTacGameActivity);
-    }
-
-    public static DatabaseReference getTicTactRoom(String roomId){
-        return FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId);
-    }
-
-    public static void setPlayerValueInTicTacGame(String playerNewValueInGame, String playerSpot, String roomId){
-        FirebaseDatabase.getInstance().getReference(ERoom.TicTac.name()).child(ERoom.tictacRoom.name()).child(roomId).child(playerSpot).setValue(playerNewValueInGame);
-    }
-    public static void removeTicTacRoom(String roomId) {
-        getTicTactRoom(roomId).removeValue();
-    }
-    public static boolean isTicTacRoomExist(String roomId){
-        if (getTicTactRoom(roomId) != null){
-            return true;
-        }
-        return false;
-    }
 
 }
