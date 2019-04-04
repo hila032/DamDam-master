@@ -52,10 +52,7 @@
         <activity
             android:name=".activities.ProfileActivity"
             android:layoutDirection="ltr" />
-        <activity
-            android:name=".activities.OnePlayerActivity"
-            android:layoutDirection="ltr" />
-        <activity android:name=".activities.RecordDumActivity" />
+        <activity android:name=".activities.RecordTicTacActivity" />
         <activity android:name=".activities.TicTacGameActivity" />
         <activity android:name=".activities.TicTacEnemyChoseActivity"></activity>
     </application>

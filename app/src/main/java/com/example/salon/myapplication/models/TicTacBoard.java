@@ -8,10 +8,11 @@ import com.example.salon.myapplication.R;
 
 public class TicTacBoard {
     private String[][] board = new String[][]{{"E","E","E"},
-                                                {"E","E","E"},
-                                                {"E","E","E"}};
+            {"E","E","E"},
+            {"E","E","E"}};
     private Button[][] buttonsArray= new Button[3][3];
     private Activity activity;
+    private int turnCounter =0;
 
     public TicTacBoard(Activity activity) {
         this.activity = activity;
@@ -60,10 +61,15 @@ public class TicTacBoard {
             setAllButtonsInGame(false);
             return board[0][2];
         }
+        if (turnCounter == 9){
+            setAllButtonsInGame(false);
+            return "Tie";
+        }
         return "E";
     }
     public void setValueInGame(int row, int col, String value){
         board[row][col] = value;
+        turnCounter++;
         buttonsArray[row][col].setText(value);
         buttonsArray[row][col].setEnabled(false);
 

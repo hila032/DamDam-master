@@ -4,65 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background1"
+    android:background="#80d4f6ff"
     tools:context=".activities.RegisterActivity">
 
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/icon"
+        android:layout_centerHorizontal="true"
+        />
     <EditText
         android:id="@+id/passwordReg"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="147dp"
-        android:ems="10"
-        android:hint="Enter password"
-        android:inputType="textPassword" />
+        android:hint="Retype password"
+        android:inputType="textPassword"
+        android:layout_above="@id/registerButtonReg"
+        android:layout_marginBottom="20dp"
+        android:layout_alignEnd="@id/usernameReg"
+        android:layout_alignStart="@id/usernameReg"/>
 
     <EditText
         android:id="@+id/usernameReg"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp"
-        android:ems="10"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_above="@id/nikenameReg"
+        android:layout_marginBottom="20dp"
+
         android:hint="Enter Email"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/nikenameReg"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/passwordReg"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="104dp"
-        android:ems="10"
-        android:hint="Enter nickname"
-        android:inputType="textEmailAddress" />
+        android:hint="Type password"
+        android:inputType="textPassword"
+        android:layout_above="@id/passwordReg"
+        android:layout_marginBottom="20dp"
+        android:layout_alignEnd="@id/usernameReg"
+        android:layout_alignStart="@id/usernameReg"/>
 
     <Button
         android:id="@+id/registerButtonReg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="143dp"
-        android:background="@color/design_default_color_primary_dark"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
         android:onClick="register"
-        android:text="register"
-        android:textColor="@android:color/white"
-        tools:text="register" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/reg_btn"
+        android:layout_alignTop="@id/loginReg"
+        />
 
     <Button
         android:id="@+id/loginReg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/login_btn"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="86dp"
-        android:background="@color/design_default_color_primary_dark"
-        android:onClick="login"
-        android:text="login"
-        android:textColor="@android:color/white"
-        tools:text="login" />
+        />
 </RelativeLayout>

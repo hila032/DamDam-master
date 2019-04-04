@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#80d4f6ff"
     tools:context=".activities.TicTacGameActivity">
 
     <LinearLayout
         android:id="@+id/Llmain"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@android:color/holo_blue_light"
+        android:background="#95a5a6"
         android:orientation="vertical"
+        android:layoutDirection="ltr"
         android:weightSum="3">
 
         <LinearLayout
@@ -142,16 +144,16 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:onClick="reset"
-        android:text="reset"
-        android:textSize="36sp" />
+    <!--<Button-->
+    <!--android:id="@+id/reset"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginBottom="24dp"-->
+    <!--android:onClick="reset"-->
+    <!--android:text="reset"-->
+    <!--android:textSize="36sp" />-->
 
     <TextView
         android:id="@+id/tV0"

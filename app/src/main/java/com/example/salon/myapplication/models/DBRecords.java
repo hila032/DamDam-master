@@ -10,20 +10,24 @@ import java.util.ArrayList;
 
 public class DBRecords extends SQLiteOpenHelper {
     public static final String DATABASENAME = "Score.db";
-    public static final String TABLE_DUM_SCORE = "tbDumScore";
-    public static final int DATABASEVERSION = 1;
+    public static final String TABLE_TIC_TAC = "tbIicTac";
+    public static final int DATABASEVERSION = 2;
     public static final String COLUMN_FIRSTNAME = "Name";
-    public static final String COLUMN_SCORE = "Score";
+    public static final String COLUMN_WIN = "win";
+    public static final String COLUMN_LOSS = "loss";
+    public static final String COLUMN_TIe = "tie";
     public static final String COLUMN_ID = "Id";
-    public static final String[] allColumns = {COLUMN_ID, COLUMN_FIRSTNAME, COLUMN_SCORE};
+    public static final String[] allColumns = {COLUMN_ID, COLUMN_FIRSTNAME, COLUMN_WIN, COLUMN_LOSS, COLUMN_TIe};
 
     private SQLiteDatabase database;
-    private String sortOrder = COLUMN_SCORE + " DESC";
+    private String sortOrder = COLUMN_WIN + " DESC";
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " +
-            TABLE_DUM_SCORE + "(" +
+            TABLE_TIC_TAC + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY,"+
             COLUMN_FIRSTNAME + " TEXT," +
-            COLUMN_SCORE + " INTEGER );";
+            COLUMN_WIN + " INTEGER, " +
+            COLUMN_LOSS +  " INTEGER, " +
+            COLUMN_TIe +  " INTEGER ); ";
 
     public DBRecords(Context context) {
         super(context, DATABASENAME, null, DATABASEVERSION);
@@ -37,15 +41,17 @@ public class DBRecords extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DUM_SCORE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIC_TAC);
         onCreate(db);
     }
     public void createDumPlayer (RecordPlayer player){
         database = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_FIRSTNAME, player.getName());
-        values.put(COLUMN_SCORE, player.getScore());
-        long id =database.insert(TABLE_DUM_SCORE, null, values);
+        values.put(COLUMN_WIN, player.getWin());
+        values.put(COLUMN_LOSS, player.getLoss());
+        values.put(COLUMN_TIe, player.getTie());
+        long id =database.insert(TABLE_TIC_TAC, null, values);
         player.setId(id);
         database.close();
     }
@@ -53,13 +59,15 @@ public class DBRecords extends SQLiteOpenHelper {
     public ArrayList <RecordPlayer> getAllPlayers(){
         database = getReadableDatabase();
         ArrayList <RecordPlayer> list = new ArrayList<>();
-        Cursor cursor = database.query(TABLE_DUM_SCORE, allColumns, null, null, null, null, sortOrder);
+        Cursor cursor = database.query(TABLE_TIC_TAC, allColumns, null, null, null, null, sortOrder);
         if (cursor.getColumnCount() > 0){
             while (cursor.moveToNext()){
                 String name = cursor.getString(cursor.getColumnIndex(COLUMN_FIRSTNAME));
-                int score = cursor.getInt(cursor.getColumnIndex(COLUMN_SCORE));
+                int win = cursor.getInt(cursor.getColumnIndex(COLUMN_WIN));
+                int loss = cursor.getInt(cursor.getColumnIndex(COLUMN_LOSS));
+                int tie = cursor.getInt(cursor.getColumnIndex(COLUMN_TIe));
                 long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-                RecordPlayer player = new RecordPlayer(name, score, id);
+                RecordPlayer player = new RecordPlayer(name, win, loss, tie, id);
                 list.add(player);
 
             }
@@ -70,12 +78,12 @@ public class DBRecords extends SQLiteOpenHelper {
     }
     public void deleteAll(){
         database = getWritableDatabase();
-        database.delete(TABLE_DUM_SCORE, null,null);
+        database.delete(TABLE_TIC_TAC, null,null);
         database.close();
     }
     public void deletePlayerByRow(long id){
         database = getWritableDatabase();
-        database.delete(TABLE_DUM_SCORE,COLUMN_ID + "=" + id, null);
+        database.delete(TABLE_TIC_TAC,COLUMN_ID + "=" + id, null);
         database.close();
     }
     public long updateById(RecordPlayer player){
@@ -83,8 +91,10 @@ public class DBRecords extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_ID, player.getId());
         values.put(COLUMN_FIRSTNAME, player.getName());
-        values.put(COLUMN_SCORE, player.getScore());
-        long id =database.update(TABLE_DUM_SCORE,values,COLUMN_ID + "=" + player.getId(), null);
+        values.put(COLUMN_WIN, player.getWin());
+        values.put(COLUMN_WIN, player.getLoss());
+        values.put(COLUMN_WIN, player.getLoss());
+        long id =database.update(TABLE_TIC_TAC,values,COLUMN_ID + "=" + player.getId(), null);
         database.close();
         return id;
     }

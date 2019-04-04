@@ -33,9 +33,9 @@ public class PlayerAdapter  extends ArrayAdapter<RecordPlayer> {
         RecordPlayer player = list.get(position);
 
         TextView name = rowView.findViewById(R.id.tvPlayerName);
-        TextView score = rowView.findViewById(R.id.tvPlayerScore);
+        TextView win = rowView.findViewById(R.id.tvPlayerScore);
         name.setText(player.getName());
-        score.setText(""+player.getScore());
+        win.setText(""+player.getWin());
 
         return rowView;
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="#80d4f6ff"
     tools:context=".activities.DunDumGameActivity">
 
     <ImageButton
@@ -77,7 +77,6 @@
         android:id="@+id/TVreloodcounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_marginTop="184dp"
         android:text="relood:"

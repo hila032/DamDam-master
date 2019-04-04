@@ -42,7 +42,7 @@ public class TicTacModle {
         getTicTactBoard(roomId).child(playerRowLocation).child(playerColLocation).setValue(playerNewValueInGame);
     }
     public static void removeTicTacRoom(String roomId) {
-        getTicTactRoom(roomId).removeValue();
+        FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId).removeValue();
     }
     public static boolean isTicTacRoomExist(String roomId){
         if (getTicTactRoom(roomId) != null){

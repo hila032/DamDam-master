@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -86,8 +87,13 @@ public class ProfileActivity extends AppCompatActivity {
             SharedPreferencesModel.seyPicName(imageName);
         }
         if (requestCode == SELCT_PHOTO && resultCode == RESULT_OK) {
-            imageBitmap = (Bitmap) data.getExtras().get("data");
-            pic.setImageBitmap(imageBitmap);
+            Uri uri = data.getData();
+            pic.setImageURI(uri);
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             privateAddPic();
             SharedPreferencesModel.seyPicName(imageName);
 
@@ -125,12 +131,9 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void DumRecords(View view) {
-        Intent intent = new Intent(this, RecordDumActivity.class);
+    public void TicRecords(View view) {
+        Intent intent = new Intent(this, RecordTicTacActivity.class);
         startActivity(intent);
     }
 
-    public void TicRecords(View view) {
-
-    }
 }

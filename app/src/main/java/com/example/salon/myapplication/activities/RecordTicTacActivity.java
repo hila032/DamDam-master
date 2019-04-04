@@ -14,7 +14,7 @@ import com.example.salon.myapplication.models.UsersModel;
 
 import java.util.ArrayList;
 
-public class RecordDumActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener {
+public class RecordTicTacActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener {
     private ArrayList <RecordPlayer> listPlayers;
     private DBRecords playerDataBase;
     private PlayerAdapter adapter;
@@ -25,7 +25,7 @@ public class RecordDumActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_record_dum);
         listView = findViewById(R.id.lvPlayers);
         playerDataBase = new DBRecords (this);
-        playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(this), 3));
+        playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(this), 0, 0, 0));
         listPlayers = playerDataBase.getAllPlayers();
         adapter = new PlayerAdapter(this, listPlayers);
         listView.setAdapter(adapter);

@@ -16,15 +16,13 @@
         android:gravity="center_vertical|center_horizontal|center"
         android:orientation="horizontal"
         android:visibility="visible"
-        android:weightSum="2"
-        android:id="@+id/layout">
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/myCard"
@@ -40,7 +38,7 @@
                 android:layout_gravity="top|center_vertical"
                 android:layout_weight="1"
                 android:visibility="visible"
-                app:srcCompat="@drawable/shoot" />
+                app:srcCompat="@drawable/gun" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,18 +62,17 @@
                 android:layout_weight="1"
                 android:baselineAlignBottom="true"
                 android:visibility="visible"
-                app:srcCompat="@drawable/shoot" />
+                app:srcCompat="@drawable/gun" />
         </LinearLayout>
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:layout_alignStart="@+id/layout"
+            android:layout_marginTop="-101dp"
+            android:text="@string/ok"
+            />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout"
-        android:layout_alignStart="@+id/layout"
-        android:layout_marginTop="-101dp"
-        android:text="@string/ok"
-        />
 </RelativeLayout>
