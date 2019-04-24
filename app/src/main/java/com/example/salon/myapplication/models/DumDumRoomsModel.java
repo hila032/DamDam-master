@@ -1,5 +1,6 @@
 package com.example.salon.myapplication.models;
 
+import com.example.salon.myapplication.EDumGame;
 import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.ERoom;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +30,7 @@ public class DumDumRoomsModel {
         FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name()).removeValue();
     }
     public static boolean isRoomExist(String roomId){
-        if (getRoom(roomId) != null){
+        if (roomId != null){
             return true;
         }
         return false;

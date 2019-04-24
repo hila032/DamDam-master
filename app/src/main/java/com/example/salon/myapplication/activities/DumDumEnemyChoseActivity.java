@@ -10,8 +10,6 @@ import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.ERoom;
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.DumDumAvailableUsersModel;
-import com.example.salon.myapplication.models.Dialogs;
-import com.example.salon.myapplication.models.IDataSnapshotOnChange;
 import com.example.salon.myapplication.models.InvitesModel;
 import com.example.salon.myapplication.models.DumDumRoomsModel;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
@@ -49,12 +47,8 @@ public class DumDumEnemyChoseActivity extends AppCompatActivity {
             }
         });
 
-        InvitesModel.listenToInvitation(UsersModel.getId(), new IDataSnapshotOnChange() {
-            @Override
-            public void doAction(DataSnapshot otherIdSnapshot) {
-                Dialogs.sendPlayerGameMassag(DumDumEnemyChoseActivity.this, otherIdSnapshot);
-            }
-        });
+        InvitesModel.listenToInvitation(UsersModel.getId(), DumDumEnemyChoseActivity.this);
+
     }
 
     @Override

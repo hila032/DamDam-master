@@ -1,15 +1,15 @@
 package com.example.salon.myapplication.models;
 
 import android.app.Activity;
-import android.content.Context;
 import android.widget.Button;
 
+import com.example.salon.myapplication.ETicTacGame;
 import com.example.salon.myapplication.R;
 
 public class TicTacBoard {
-    private String[][] board = new String[][]{{"E","E","E"},
-            {"E","E","E"},
-            {"E","E","E"}};
+    private String[][] board = new String[][]{{ETicTacGame.E.name(),ETicTacGame.E.name(),ETicTacGame.E.name()},
+            {ETicTacGame.E.name(),ETicTacGame.E.name(),ETicTacGame.E.name()},
+            {ETicTacGame.E.name(),ETicTacGame.E.name(),ETicTacGame.E.name()}};
     private Button[][] buttonsArray= new Button[3][3];
     private Activity activity;
     private int turnCounter =0;
@@ -26,46 +26,46 @@ public class TicTacBoard {
         this.buttonsArray[2][1] = activity.findViewById(R.id.b21);
         this.buttonsArray[2][2] = activity.findViewById(R.id.b22);
     }
+private boolean isSamenotEmptyCell(String cell1, String cell2, String cell3){
+    if (cell1.equals(ETicTacGame.E.name()) || cell2.equals(ETicTacGame.E.name()) || cell3.equals(ETicTacGame.E.name())){
+        return false;
+    }
+    if (cell1.equals(cell2) && cell2.equals(cell3)){
+        return true;
+    }
+    return false;
+}
 
     public String checkGameOver(){
         //checked rows
         for ( int row = 0; row < board.length; row++){
-            if (board[row][0].equals("E")){
-                continue;
-            }else
-            if (board[row][0].equals(board[row][1])&& board[row][1].equals(board[row][2])){
+              if (isSamenotEmptyCell(board[row][0],board[row][1], board[row][2])){
                 setAllButtonsInGame(false);
                 return board[row][0];
+
             }
         }
         // checked col
         for ( int col = 0; col < board.length; col++){
-            if (board[0][col].equals("E")){
-                continue;
-            }
-            if (board[0][col].equals(board[1][col])&& board[1][col].equals(board[2][col])){
+            if (isSamenotEmptyCell(board[0][col],board[1][col], board[2][col])){
                 setAllButtonsInGame(false);
                 return board[0][col];
             }
         }
         //checked אלכסונים
-        if (board[0][0].equals(board[1][1])&&
-                board[1][1].equals(board[2][2]) &&
-                !board[0][0].equals("E")) {
+        if (isSamenotEmptyCell(board[0][0],board[1][1], board[2][2])){
             setAllButtonsInGame(false);
             return board[0][0];
         }
-        if (board[0][2].equals(board[1][1])&&
-                board[1][1].equals(board[2][0]) &&
-                !board[0][2].equals("E")) {
+        if (isSamenotEmptyCell(board[0][2],board[1][1], board[2][0])){
             setAllButtonsInGame(false);
             return board[0][2];
         }
         if (turnCounter == 9){
             setAllButtonsInGame(false);
-            return "Tie";
+            return ETicTacGame.Tie.name();
         }
-        return "E";
+        return ETicTacGame.E.name();
     }
     public void setValueInGame(int row, int col, String value){
         board[row][col] = value;
@@ -75,34 +75,35 @@ public class TicTacBoard {
 
     }
     public void setAlfaInGame(boolean isMyTurn){
-        if (isMyTurn == false) {
-            for (int row = 0; row < 3; row++) {
-                for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (!isMyTurn) {
                     buttonsArray[row][col].setAlpha(0.99f);
                 }
-            }
-        }
-        else {
-            for (int row = 0; row < 3; row++) {
-                for (int col = 0; col < 3; col++) {
-                    buttonsArray[row][col].setAlpha(1);
+                else {
+                    buttonsArray[row][col].setAlpha(1f);
+                }
+                // לא פועל
+                if (buttonsArray[row][col].equals(ETicTacGame.E.name())){
+                    buttonsArray[row][col].setAlpha(0f);
                 }
             }
         }
     }
     public void setAllButtonsInGame(boolean isMyTurn){
-        if (isMyTurn == false) {
-            for (int row = 0; row < 3; row++) {
-                for (int col = 0; col < 3; col++) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (!isMyTurn){
                     buttonsArray[row][col].setEnabled(false);
                 }
-            }
-        }
-        else {
-            for (int row = 0; row < 3; row++) {
-                for (int col = 0; col < 3; col++) {
+                else {
                     buttonsArray[row][col].setEnabled(true);
                 }
+                // לא פועל
+                if (buttonsArray[row][col].equals(ETicTacGame.x.name()) || buttonsArray[row][col].equals(ETicTacGame.o.name())){
+                    buttonsArray[row][col].setEnabled(false);
+                }
+
             }
         }
     }

@@ -25,7 +25,6 @@ public class RecordTicTacActivity extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_record_dum);
         listView = findViewById(R.id.lvPlayers);
         playerDataBase = new DBRecords (this);
-        playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(this), 0, 0, 0));
         listPlayers = playerDataBase.getAllPlayers();
         adapter = new PlayerAdapter(this, listPlayers);
         listView.setAdapter(adapter);

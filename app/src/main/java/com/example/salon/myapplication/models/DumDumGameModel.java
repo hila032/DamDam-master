@@ -5,7 +5,6 @@ import com.example.salon.myapplication.EPlayer;
 
 
 public class DumDumGameModel {
-    private static int counterReloods = 0;
 
 
 

@@ -8,8 +8,6 @@ import android.os.Bundle;
 import com.example.salon.myapplication.EIntant;
 import com.example.salon.myapplication.EPlayer;
 import com.example.salon.myapplication.R;
-import com.example.salon.myapplication.models.Dialogs;
-import com.example.salon.myapplication.models.IDataSnapshotOnChange;
 import com.example.salon.myapplication.models.InvitesModel;
 import com.example.salon.myapplication.models.TicTacModle;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
@@ -47,12 +45,7 @@ public class TicTacEnemyChoseActivity extends AppCompatActivity {
             }
         });
 
-        InvitesModel.listenToInvitation(UsersModel.getId(), new IDataSnapshotOnChange() {
-            @Override
-            public void doAction(DataSnapshot otherIdSnapshot) {
-                Dialogs.sendPlayerTicTacGameMassag(TicTacEnemyChoseActivity.this, otherIdSnapshot);
-            }
-        });
+        InvitesModel.listenToInvitation(UsersModel.getId(), TicTacEnemyChoseActivity.this);
     }
 
     @Override

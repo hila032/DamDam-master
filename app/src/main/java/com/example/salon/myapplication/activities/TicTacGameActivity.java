@@ -1,6 +1,5 @@
 package com.example.salon.myapplication.activities;
 
-import android.app.Dialog;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,17 +12,20 @@ import android.widget.Toast;
 
 import com.example.salon.myapplication.EIntant;
 import com.example.salon.myapplication.EPlayer;
+import com.example.salon.myapplication.ETicTacGame;
 import com.example.salon.myapplication.R;
+import com.example.salon.myapplication.models.DBRecords;
 import com.example.salon.myapplication.models.Dialogs;
+import com.example.salon.myapplication.models.RecordPlayer;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
 import com.example.salon.myapplication.models.TicTacBoard;
 import com.example.salon.myapplication.models.TicTacModle;
+import com.example.salon.myapplication.models.UsersModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 public class TicTacGameActivity extends AppCompatActivity {
-    private LinearLayout l;
     private TextView textView;
     private TextView ViewScore;
     private String playerValue;
@@ -32,30 +34,43 @@ public class TicTacGameActivity extends AppCompatActivity {
     private TicTacBoard board;
     private ChildEventListener changeTextListener;
     private boolean isMyTurn;
+    private DBRecords playerDataBase;
+    private final String x = "x";
+    private final String o = "o";
+    private final String tie = "Tie";
+    private final String OTHER_PLAYER_TURN = "other player turn";
+    private final String YOUR_TURN = "your turn";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_game);
+        textView = (TextView)findViewById(R.id.whosTurnIsTV);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         SharedPreferencesModel.setIsInGame(true, this);
         board = new TicTacBoard(this);
         roomId = (String) this.getIntent().getExtras().get(EIntant.id.name());
+        playerDataBase = new DBRecords(this);
         player = (EPlayer) this.getIntent().getExtras().get(EIntant.whoAmI.name());
         if (player == EPlayer.PLAYER1){
-            playerValue= "x";
+            playerValue=x;
+            Toast.makeText(this, "you are x, you start", Toast.LENGTH_SHORT).show();
             isMyTurn = true;
             board.setAllButtonsInGame(isMyTurn);
         }else {
-            playerValue = "O";
+            playerValue = o;
+            Toast.makeText(this, "you are o, other player start", Toast.LENGTH_SHORT).show();
             isMyTurn = false;
             board.setAllButtonsInGame(isMyTurn);
         }
         board.setAlfaInGame(isMyTurn);
-        //l = (LinearLayout)findViewById(R.id.Llmain);
-        textView = (TextView)findViewById(R.id.tV0);
-        textView.setText("x");
-        textView = (TextView)findViewById(R.id.tV0);
-        textView.setText("0");
+
+        changeTurnTextView();
+
 
         ViewScore = (TextView)findViewById(R.id.winX);
         changeTextListener = new ChildEventListener() {
@@ -68,30 +83,24 @@ public class TicTacGameActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (TicTacModle.isTicTacRoomExist(roomId)) {
                     for (int i =0; i<3; i++) {
-                        board.setValueInGame(Integer.parseInt(dataSnapshot.getKey()), i, (String) dataSnapshot.child(i + "").getValue());
+                        String value = (String) dataSnapshot.child(i + "").getValue();
+                        if (value != null) {
+                            board.setValueInGame(Integer.parseInt(dataSnapshot.getKey()), i, value);
+                        }
                     }
                     isMyTurn =!isMyTurn;
                     board.setAlfaInGame(isMyTurn);
                     board.setAllButtonsInGame(isMyTurn);
-
-
+                    changeTurnTextView();
                     String result = board.checkGameOver();
-                    if (result.equals("x")) {
-                        Dialogs.endGame(TicTacGameActivity.this, "x");
-                        Toast.makeText(TicTacGameActivity.this, "x wins", Toast.LENGTH_SHORT).show();
-                    } else if (result.equals("O")) {
-                        Dialogs.endGame(TicTacGameActivity.this, "O");
-                        Toast.makeText(TicTacGameActivity.this, "O wins", Toast.LENGTH_SHORT).show();
-                    } else if (result.equals("Tie")) {
-                        Dialogs.endGame(TicTacGameActivity.this, "Tie");
-                        Toast.makeText(TicTacGameActivity.this, "no winners", Toast.LENGTH_SHORT).show();
-                    }
+                    handleGameFinish(result);
                 }
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                TicTacModle.getTicTactRoom(roomId).removeEventListener(changeTextListener);
+                finish();
             }
 
             @Override
@@ -104,10 +113,17 @@ public class TicTacGameActivity extends AppCompatActivity {
 
             }
         };
-        TicTacModle.getTicTactRoom(roomId).child("board").addChildEventListener(changeTextListener);
-
-
+        TicTacModle.getTicTactRoom(roomId).child(ETicTacGame.board.name()).addChildEventListener(changeTextListener);
     }
+
+    private void changeTurnTextView() {
+        if (isMyTurn) {
+            textView.setText(YOUR_TURN);
+        }else {
+            textView.setText(OTHER_PLAYER_TURN);
+        }
+    }
+
     public void changeText (View view) {
         Button btn = (Button) view;
         String rowTag = (String) ((LinearLayout) view.getParent()).getTag();
@@ -116,8 +132,6 @@ public class TicTacGameActivity extends AppCompatActivity {
         TicTacModle.setPlayerValueInTicTacGame(playerValue, rowTag,colTag, roomId);
         btn.setText(playerValue);
         btn.setEnabled(false);
-
-        textView.setText(playerValue);
     }
 
     @Override
@@ -126,17 +140,36 @@ public class TicTacGameActivity extends AppCompatActivity {
         SharedPreferencesModel.setIsInGame(true,this);
     }
 
+    private void handleGameFinish(String result) {
+        switch (result) {
+            case x:
+                Dialogs.endGame(TicTacGameActivity.this, x);
+                if (player.equals(EPlayer.PLAYER1.name())) {
+                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 1, 0, 0));
+                } else {
+                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
+                }
+                break;
+            case o:
+                if (player.equals(EPlayer.PLAYER2.name())) {
+                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 1, 0, 0));
+                } else {
+                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
+                }
+                Dialogs.endGame(TicTacGameActivity.this, o);
+                break;
+            case tie:
+                Dialogs.endGame(TicTacGameActivity.this, tie);
+                playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 0, 1));
+                break;
+        }
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
         SharedPreferencesModel.setIsInGame(false, this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        TicTacModle.getTicTactRoom(roomId).removeEventListener(changeTextListener);
         TicTacModle.removeTicTacRoom(roomId);
+        TicTacModle.getTicTactRoom(roomId).removeEventListener(changeTextListener);
     }
 }

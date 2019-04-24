@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.salon.myapplication.EDumGame;
 import com.example.salon.myapplication.EIntant;
@@ -56,7 +57,7 @@ public class Dialogs {
     }
     public static void endGame(final Activity correntActivity, String player){
         AlertDialog.Builder builder = new AlertDialog.Builder(correntActivity);
-        builder.setMessage("Game over, the getWinner is: " + player);
+        builder.setMessage("Game over, the Winner is: " + player);
         builder.setTitle("Game Over");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -70,6 +71,28 @@ public class Dialogs {
             dialog.show();
         }
     }
+
+    public static void DumDumEndGame(final Activity correntActivity, String player, String myCard, String otherCard){
+        final Dialog dialog = new Dialog(correntActivity);
+        dialog.setContentView(R.layout.end_game_dialog);
+        mycardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
+        othercardDilog = (ImageView)dialog.findViewById(R.id.otherCardIV);
+        TextView winner = (TextView) dialog.findViewById(R.id.winner);
+        winner.setText("the winner is " + player);
+        showImage(myCard,otherCard);
+        okDilog = (Button) dialog.findViewById(R.id.ok);
+        okDilog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                correntActivity.finish();
+            }
+        });
+        if (correntActivity.hasWindowFocus()) {
+            dialog.show();
+        }
+    }
+
     public static void tie(final Activity correntActivity, String myCard, String otherCard){
         final Dialog dialog = new Dialog(correntActivity);
         dialog.setContentView(R.layout.tie_dialog);

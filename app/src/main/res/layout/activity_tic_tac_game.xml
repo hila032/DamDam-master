@@ -156,9 +156,9 @@
     <!--android:textSize="36sp" />-->
 
     <TextView
-        android:id="@+id/tV0"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/whosTurnIsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="30sp" />

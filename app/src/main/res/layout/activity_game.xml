@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/defance" />
 
     <ImageButton
-        android:id="@+id/BTNammuo"
+        android:id="@+id/BTNrelood"
         android:layout_width="94dp"
         android:layout_height="84dp"
         android:layout_alignTop="@+id/BTNgun"

@@ -3,6 +3,7 @@ package com.example.salon.myapplication.activities;
 import android.content.Context;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.salon.myapplication.models.DumDumGameModel;
 import com.example.salon.myapplication.models.DumDumRoomsModel;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
 import com.example.salon.myapplication.models.Sound;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -34,6 +36,7 @@ public class DunDumGameActivity extends AppCompatActivity {
     private ImageButton shoot, relood, defance;
     private String myCard;
     private ValueEventListener changeCardListener;
+    private ChildEventListener exitPlayerListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class DunDumGameActivity extends AppCompatActivity {
         stutos = (TextView) findViewById(R.id.stutos);
         playerName.setText(player.name());
         shoot = (ImageButton) findViewById(R.id.BTNgun);
-        relood = (ImageButton) findViewById(R.id.BTNammuo);
+        relood = (ImageButton) findViewById(R.id.BTNrelood);
         defance = (ImageButton) findViewById(R.id.BTNshild);
         TVreloodCounter = (TextView) findViewById(R.id.reloodCounter);
         Sound.setSound(this);
@@ -54,29 +57,55 @@ public class DunDumGameActivity extends AppCompatActivity {
         TVreloodCounter.setText("0");
         enableClikes(true);
 
+// קוד חורני בדרך
+        exitPlayerListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                DumDumRoomsModel.getRoom(roomId).removeEventListener(exitPlayerListener);
+                finish();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        DumDumRoomsModel.getRoom(roomId).addChildEventListener(exitPlayerListener);
         changeCardListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (DumDumRoomsModel.isRoomExist(roomId)) {
+                myCard = (String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue();
+                String otherPlayerCard = (String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue();
 
-                    myCard = (String) dataSnapshot.child((player).name()).child(ERoom.card.name()).getValue();
-                    String otherPlayerCard = (String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.card.name()).getValue();
-
-                    if (myCard == null || otherPlayerCard == null) {
-                        if(myCard == null){
-                            stutos.setText("whiting for your choice");
-                        }
-                        if(myCard != null && otherPlayerCard == null){
-                            stutos.setText("whiting for other player choice");
-                        }
-                        return;
+                if (myCard == null || otherPlayerCard == null) {
+                    if(myCard == null){
+                        stutos.setText("whiting for your choice");
                     }
-                    enableClikes(true);
-                    handleWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
-                    if (myCard != null && otherPlayerCard != null) {
-                        DumDumRoomsModel.removeCard(roomId,player);
+                    if(myCard != null && otherPlayerCard == null){
+                        stutos.setText("whiting for other player choice");
                     }
-
+                    return;
+                }
+                enableClikes(true);
+                handleWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
+                if (myCard != null && otherPlayerCard != null) {
+                    DumDumRoomsModel.removeCard(roomId,player);
                 }
             }
 
@@ -87,27 +116,23 @@ public class DunDumGameActivity extends AppCompatActivity {
 
         };
         DumDumRoomsModel.getRoom(roomId).addValueEventListener(changeCardListener);
-//        enableClikes(true);
 
     }
     public void handleWinner(String myCard, String myName, String otherPlayerCard, String otherPlayerName){
         if (myCard.equals(EDumGame.shoot.name())&& reloodCounter > 0) {
-            if (myCard.equals(EDumGame.shoot.name()) && otherPlayerCard.equals(EDumGame.relood.name())) { // other player defend or shoot
+            if (myCard.equals(EDumGame.shoot.name()) && otherPlayerCard.equals(EDumGame.relood.name())) { //player 1 win
                 //Toast.makeText(this, "the getWinner is: " + myName, LENGTH_SHORT).show();
-                DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
-                Dialogs.endGame(this, myName);
-
-
+                DumDumRoomsModel.getRoom(roomId).removeEventListener(exitPlayerListener);
+                Dialogs.DumDumEndGame(this, myName,myCard,otherPlayerCard);
             }
-            Dialogs.tie(this,myCard,otherPlayerCard);
             reloodCounter--;
             enableShoot();
             TVreloodCounter.setText(String.valueOf(reloodCounter));
         }
-        else if (otherPlayerCard.equals(EDumGame.shoot.name()) && myCard.equals(EDumGame.relood.name())) { // this player defend or shoot
+        else if (otherPlayerCard.equals(EDumGame.shoot.name()) && myCard.equals(EDumGame.relood.name())) { // other plyer win
             //Toast.makeText(this, "the getWinner is: " + otherPlayerName, LENGTH_SHORT).show();
-            DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
-            Dialogs.endGame(this, otherPlayerName);
+            DumDumRoomsModel.getRoom(roomId).removeEventListener(exitPlayerListener);
+            Dialogs.DumDumEndGame(this, otherPlayerName,myCard,otherPlayerCard);
 
         }
         else {
@@ -167,6 +192,7 @@ public class DunDumGameActivity extends AppCompatActivity {
         super.onStop();
         SharedPreferencesModel.setIsInGame(false, this);
         DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
+        DumDumRoomsModel.getRoom(roomId).removeEventListener(exitPlayerListener);
         DumDumRoomsModel.removeRoom(roomId);
     }
 }

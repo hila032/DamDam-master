@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -51,10 +52,26 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ProfileActivity"
-            android:layoutDirection="ltr" />
-        <activity android:name=".activities.RecordTicTacActivity" />
-        <activity android:name=".activities.TicTacGameActivity" />
-        <activity android:name=".activities.TicTacEnemyChoseActivity"></activity>
+            android:layoutDirection="ltr"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RecordTicTacActivity"
+            android:layoutDirection="ltr"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.TicTacGameActivity"
+            android:layoutDirection="ltr"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.TicTacEnemyChoseActivity"/>
+
+        <receiver android:name = ".models.MyReceiver">
+            <intent-filter>
+                <action android:name = "android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name = "android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
+
 
 </manifest>
