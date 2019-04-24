@@ -18,7 +18,7 @@
         android:id="@+id/tvPlayerName"
         android:gravity="center_vertical"
         android:text="ex"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_toRightOf="@id/imgTr"
         android:layout_marginLeft="20dp"
         android:textColor="#ff212121"/>

@@ -135,9 +135,7 @@ public class DunDumGameActivity extends AppCompatActivity {
             Dialogs.DumDumEndGame(this, otherPlayerName,myCard,otherPlayerCard);
 
         }
-        else {
-            Dialogs.tie(this,myCard,otherPlayerCard);
-        }
+        Dialogs.tie(this,myCard,otherPlayerCard);
 
         if (myCard.equals(EDumGame.relood.name())) {
             reloodCounter++;

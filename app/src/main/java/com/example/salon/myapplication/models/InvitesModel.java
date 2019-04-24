@@ -2,6 +2,7 @@ package com.example.salon.myapplication.models;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.example.salon.myapplication.activities.DumDumEnemyChoseActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +22,12 @@ public class InvitesModel {
             @Override
             public void onDataChange(@NonNull final DataSnapshot otherIdSnapshot) {
                 if (otherIdSnapshot.getValue() != null) {
-                    Dialogs.sendPlayerGameMassag(activity, otherIdSnapshot);
+                    if (activity.getClass().getSimpleName().equals("TicTacEnemyChoseActivity")){
+                        Dialogs.sendPlayerTicTacGameMassag(activity, otherIdSnapshot);
+                    }
+                    else {
+                        Dialogs.sendPlayerGameMassag(activity, otherIdSnapshot);
+                    }
                 }
             }
 
