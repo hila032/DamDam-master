@@ -29,15 +29,13 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        SharedPreferencesModel.setDefault(this);
-        TextView email = (TextView) findViewById(R.id.emailWelcome);
-        auth = FirebaseAuth.getInstance();
-        email.setText(auth.getCurrentUser().getEmail()); //todo: might prodoce nullPointerException
-
-        Toast.makeText(WelcomeActivity.this, "welcome back " + UsersModel.getNickname(this), Toast.LENGTH_LONG).show();
-
         MyReceiver = new MyReceiver();
         broadcastIntent();
+        SharedPreferencesModel.setDefault(this);
+        auth = FirebaseAuth.getInstance();
+        Toast.makeText(WelcomeActivity.this, "welcome back " + UsersModel.getNickname(this), Toast.LENGTH_LONG).show();
+
+
 
     }
 
@@ -83,5 +81,11 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onPause();
         unregisterReceiver(MyReceiver);
         stopService(intentService);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        broadcastIntent();
     }
 }

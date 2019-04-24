@@ -4,83 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80d4f6ff"
-    tools:context=".activities.DunDumGameActivity">
+    android:background="@drawable/background"
+    tools:context=".activities.DunDumGameActivity"
+    android:layoutDirection="ltr">
 
     <ImageButton
         android:id="@+id/BTNgun"
-        android:layout_width="90dp"
-        android:layout_height="86dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginBottom="16dp"
-        android:onClick="shoot"
-        app:srcCompat="@drawable/shoot" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/gun"
+        android:onClick="shoot" />
 
     <ImageButton
         android:id="@+id/BTNshild"
-        android:layout_width="102dp"
-        android:layout_height="83dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="412dp"
-        android:onClick="defance"
-        app:srcCompat="@drawable/defance" />
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shield"
+        android:onClick="defance" />
 
     <ImageButton
         android:id="@+id/BTNrelood"
-        android:layout_width="94dp"
-        android:layout_height="84dp"
-        android:layout_alignTop="@+id/BTNgun"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="13dp"
-        android:onClick="relood"
-        app:srcCompat="@drawable/relood" />
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/relood"
+        android:onClick="relood" />
 
-    <TextView
+        <TextView
         android:id="@+id/stutos"
-        android:layout_width="175dp"
-        android:layout_height="67dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="37dp"
-        android:layout_toEndOf="@+id/playerName"
-        android:textColor="@android:color/white"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/playerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="43dp"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="24sp" />
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="30sp" />
 
-    <TextView
+        <TextView
+        android:id="@+id/playerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/stutos"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="30sp" />
+
+        <TextView
         android:id="@+id/reloodCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/BTNgun"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="-4dp"
-        android:layout_marginTop="223dp"
+        android:layout_below="@+id/TVreloodcounter"
+        android:layout_alignParentStart="true"
         android:text="TextView"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="24sp" />
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="30sp" />
 
-    <TextView
+        <TextView
         android:id="@+id/TVreloodcounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="184dp"
+        android:layout_below="@+id/stutos"
         android:text="relood:"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="24sp" />
-
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="30sp" />
 </RelativeLayout>

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.WelcomeActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back_ground"
-    android:layoutDirection="ltr"
 
     >
 
@@ -57,18 +55,15 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
         android:background="@drawable/question" />
-
     <Button
         android:id="@+id/BTNshare"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:background="@drawable/share"
-        android:onClick="share" />
+        android:onClick="share"
+        android:background="@drawable/share" />
 
 
 </RelativeLayout>

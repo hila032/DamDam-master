@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80d4f6ff"
+    android:background="#62ad68"
     tools:context=".activities.TicTacGameActivity">
 
     <LinearLayout
@@ -143,17 +143,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <!--<Button-->
-    <!--android:id="@+id/reset"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginBottom="24dp"-->
-    <!--android:onClick="reset"-->
-    <!--android:text="reset"-->
-    <!--android:textSize="36sp" />-->
 
     <TextView
         android:id="@+id/whosTurnIsTV"
