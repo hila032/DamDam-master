@@ -55,7 +55,8 @@ public class Dialogs {
                     }
                 });
         AlertDialog dialog = builder.create();
-        dialog.show();
+        InvitesModel.listenToRemoveInvitation(dialog);
+
     }
     public static void endTicTacGame(final Activity correntActivity, String playerValue){
         AlertDialog.Builder builder = new AlertDialog.Builder(correntActivity);

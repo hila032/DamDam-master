@@ -17,8 +17,10 @@ import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.Dialogs;
 import com.example.salon.myapplication.models.DumDumGameModel;
 import com.example.salon.myapplication.models.DumDumRoomsModel;
+import com.example.salon.myapplication.models.InvitesModel;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
 import com.example.salon.myapplication.models.Sound;
+import com.example.salon.myapplication.models.UsersModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -93,6 +95,8 @@ public class DunDumGameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Sound.createSoundPool(this);
+        InvitesModel.removeInvitation(UsersModel.getId());
+
     }
 
     public void handleWinner(String myCard, String myName, String otherPlayerCard, String otherPlayerName){

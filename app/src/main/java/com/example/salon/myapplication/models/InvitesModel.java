@@ -2,6 +2,7 @@ package com.example.salon.myapplication.models;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 
 import com.example.salon.myapplication.EInvites;
 import com.example.salon.myapplication.activities.TicTacEnemyChoseActivity;
@@ -32,6 +33,25 @@ public class InvitesModel {
                     else {
                         Dialogs.sendDumDumPlayerGameMassag(activity, otherIdSnapshot);
                     }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public static void listenToRemoveInvitation(final AlertDialog dialog) {
+        FirebaseDatabase.getInstance().getReference(EInvites.INVITES.name()).child(UsersModel.getId()).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot otherIdSnapshot) {
+                if (otherIdSnapshot.getValue() != null ) {
+                dialog.show();
+                }
+                else {
+                    dialog.dismiss();
                 }
             }
 
