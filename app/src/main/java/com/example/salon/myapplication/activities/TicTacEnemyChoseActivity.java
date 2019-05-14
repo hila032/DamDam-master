@@ -33,8 +33,8 @@ public class TicTacEnemyChoseActivity extends AppCompatActivity {
 
                 if (dataSnapshot.getValue() != null && !isInGame) {
                     Intent intent = new Intent(TicTacEnemyChoseActivity.this, TicTacGameActivity.class);
-                    intent.putExtra(EIntant.id.name(), UsersModel.getId());
-                    intent.putExtra(EIntant.whoAmI.name(), EPlayer.PLAYER1);
+                    intent.putExtra(EIntant.ID.name(), UsersModel.getId());
+                    intent.putExtra(EIntant.WHO_AM_I.name(), EPlayer.PLAYER1);
                     startActivity(intent);
                 }
             }

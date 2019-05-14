@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="101dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/background"
         android:gravity="center_vertical|center_horizontal|center"
         android:orientation="horizontal"
         android:visibility="visible"
@@ -64,6 +64,7 @@
                 android:visibility="visible"
                 app:srcCompat="@drawable/gun" />
         </LinearLayout>
+
         <Button
             android:id="@+id/ok"
             android:layout_width="wrap_content"
@@ -71,12 +72,12 @@
             android:layout_below="@+id/layout"
             android:layout_alignStart="@+id/layout"
             android:layout_marginTop="-101dp"
-            android:text="@string/ok"
-            />
+            android:text="@string/ok" />
+
         <TextView
+            android:id="@+id/winner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/winner"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </RelativeLayout>

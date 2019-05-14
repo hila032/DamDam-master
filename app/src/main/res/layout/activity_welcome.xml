@@ -4,7 +4,7 @@
     tools:context=".activities.WelcomeActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_ground"
+    android:background="@drawable/welcome"
     android:layoutDirection="ltr"
 
     >
@@ -12,13 +12,13 @@
     <Button
         android:id="@+id/playNow"
         android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="20dp"
         android:background="@drawable/play"
-        android:onClick="userList" />
+        android:onClick="dumDumUserList" />
 
     <Button
         android:id="@+id/ticTacBTN"
@@ -28,7 +28,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="20dp"
         android:background="@drawable/tictac"
-        android:onClick="ticTac" />
+        android:onClick="ticTacUserList" />
 
     <Button
         android:id="@+id/logout"

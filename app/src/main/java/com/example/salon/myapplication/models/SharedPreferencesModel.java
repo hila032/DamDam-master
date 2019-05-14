@@ -6,31 +6,30 @@ import android.content.SharedPreferences;
 import com.example.salon.myapplication.ESharedPreferences;
 
 public class SharedPreferencesModel {
-    private static SharedPreferences sp;
+    private static SharedPreferences sharedPreferencesPic;
     private static SharedPreferences.Editor editor;
-    private static String FILE_NAME = "profile";
-    private static String PIC_NAME = "picName";
+    
     public static void setIsInGame(boolean isInGame, Context context) {
-        SharedPreferences preferencesIsInGame = context.getSharedPreferences(ESharedPreferences.state.name(), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencesIsInGame.edit();
-        editor.putBoolean(ESharedPreferences.isInGame.name(), isInGame);
+        SharedPreferences preferencesIsInGame = context.getSharedPreferences(ESharedPreferences.STATE.name(), Context.MODE_PRIVATE);
+        editor = preferencesIsInGame.edit();
+        editor.putBoolean(ESharedPreferences.IS_IN_GAME.name(), isInGame);
         editor.commit();
     }
 
     public static boolean getIsInGame(Context context) {
-        return context.getSharedPreferences(ESharedPreferences.state.name(), Context.MODE_PRIVATE).getBoolean(ESharedPreferences.isInGame.name(), false);
+        return context.getSharedPreferences(ESharedPreferences.STATE.name(), Context.MODE_PRIVATE).getBoolean(ESharedPreferences.IS_IN_GAME.name(), false);
 
     }
     public static void setDefault (Context context){
-        sp = context.getSharedPreferences(FILE_NAME,Context.MODE_PRIVATE);
-        editor = sp.edit();
+        sharedPreferencesPic = context.getSharedPreferences(ESharedPreferences.PROFILE.name(),Context.MODE_PRIVATE);
+        editor = sharedPreferencesPic.edit();
     }
-    public static String getPicName (Context context){
-        return sp.getString(PIC_NAME,"");
+    public static String getPicName (){
+        return sharedPreferencesPic.getString(ESharedPreferences.PIC_NAME.name(),"");
     }
 
-    public static void seyPicName (String picName){
-        editor.putString(PIC_NAME,picName);
+    public static void setPicName(String picName){
+        editor.putString(ESharedPreferences.PIC_NAME.name(),picName);
         editor.commit();
     }
 

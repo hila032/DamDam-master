@@ -10,17 +10,17 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class DumDumAvailableUsersModel {
 
-    private static final DatabaseReference dumDumavailableUsers = FirebaseDatabase.getInstance().getReference("dum dum availableUsers");
+    private static final DatabaseReference dumDumAvailableUsers = FirebaseDatabase.getInstance().getReference("dum dum availableUsers");
 
-    public static void DumDumaddUserToAvailableUsers(String id, String email) {
-        dumDumavailableUsers.child(id).setValue(email);
+    public static void addDumDumUserToAvailableUsers(String id, String email) {
+        dumDumAvailableUsers.child(id).setValue(email);
     }
     public static void removeDumDumUser(String id){
-        dumDumavailableUsers.child(id).removeValue();
+        dumDumAvailableUsers.child(id).removeValue();
     }
 
 
     public static DatabaseReference getDumDumAvailableUsers() {
-        return dumDumavailableUsers;
+        return dumDumAvailableUsers;
     }
 }

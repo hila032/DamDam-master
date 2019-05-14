@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.salon.myapplication.models.DumDumAvailableUsersModel;
 import com.example.salon.myapplication.models.InvitesModel;
 import com.example.salon.myapplication.models.TicTacAvailableUsersModle;
 import com.example.salon.myapplication.models.UsersModel;
@@ -50,7 +49,7 @@ public class TicTacEnemyListView extends ListView {
                     TicTacEnemyListView.this.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            InvitesModel.addInvits(UsersModel.getId(), adapter.getItem(position).getId());
+                            InvitesModel.addInvite(UsersModel.getId(), adapter.getItem(position).getId());
 
 
                         }

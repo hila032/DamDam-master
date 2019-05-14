@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#62ad68"
+    android:background="@drawable/background"
     tools:context=".activities.TicTacGameActivity">
 
     <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="0"
                 android:text=""
                 android:textColorLink="@android:color/background_light"
@@ -44,7 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="1"
                 android:text=""
                 android:textSize="36sp" />
@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="2"
                 android:text=""
                 android:textSize="36sp" />
@@ -75,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="0"
                 android:text=""
                 android:textSize="36sp" />
@@ -85,7 +85,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="1"
                 android:text=""
                 android:textSize="36sp" />
@@ -95,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="2"
                 android:text=""
                 android:textSize="36sp" />
@@ -116,7 +116,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="0"
                 android:text=""
                 android:textSize="36sp" />
@@ -126,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="1"
                 android:text=""
                 android:textSize="36sp" />
@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="changeText"
+                android:onClick="setCellValueOnClick"
                 android:tag="2"
                 android:text=""
                 android:textSize="36sp" />

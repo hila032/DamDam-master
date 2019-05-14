@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.DBRecords;
+import com.example.salon.myapplication.models.PlayerAdapter;
 import com.example.salon.myapplication.models.RecordPlayer;
-import com.example.salon.myapplication.models.UsersModel;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class RecordTicTacActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        RecordPlayer player = listPlayers.get(position);
+        listPlayers.get(position);
         playerDataBase.deletePlayerByRow(listPlayers.get(position).getId());
         listPlayers.remove(listPlayers.get(position));
         adapter.notifyDataSetChanged();

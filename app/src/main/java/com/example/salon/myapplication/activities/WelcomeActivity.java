@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class WelcomeActivity extends AppCompatActivity {
     private Intent intentService;
     private ComponentName service;
-    private FirebaseAuth auth;
     private BroadcastReceiver MyReceiver = null;
 
     @Override
@@ -32,7 +31,6 @@ public class WelcomeActivity extends AppCompatActivity {
         MyReceiver = new MyReceiver();
         broadcastIntent();
         SharedPreferencesModel.setDefault(this);
-        auth = FirebaseAuth.getInstance();
         Toast.makeText(WelcomeActivity.this, "welcome back " + UsersModel.getNickname(this), Toast.LENGTH_LONG).show();
 
 
@@ -48,18 +46,17 @@ public class WelcomeActivity extends AppCompatActivity {
     public void share(View view) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "I challenging you to dum dum duel");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "I challenging you to a duel");
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
 
-    public void userList(View view) {
+    public void dumDumUserList(View view) {
         Intent intent = new Intent(WelcomeActivity.this, DumDumEnemyChoseActivity.class);
         startActivity(intent);
     }
 
     public void logout(View view) {
-        DumDumAvailableUsersModel.removeDumDumUser(UsersModel.getId());
         UsersModel.signOut();
         Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
         startActivity(intent);
@@ -70,7 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void ticTac(View view) {
+    public void ticTacUserList(View view) {
         Intent intent = new Intent(WelcomeActivity.this, TicTacEnemyChoseActivity.class);
         startActivity(intent);
     }

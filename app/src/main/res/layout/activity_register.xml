@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#62ad68"
+    android:background="@drawable/background"
     tools:context=".activities.RegisterActivity">
 
 
@@ -32,17 +32,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_above="@id/nikenameReg"
+        android:layout_above="@id/nicknameReg"
         android:layout_marginBottom="20dp"
-
         android:hint="Enter Email"
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/nikenameReg"
+        android:id="@+id/nicknameReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Type password"
+        android:hint="Enter Your nickname"
         android:inputType="textPassword"
         android:layout_above="@id/passwordReg"
         android:layout_marginBottom="20dp"
@@ -69,5 +68,6 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/login_btn"
         android:layout_alignParentBottom="true"
+        android:onClick="login"
         />
 </RelativeLayout>

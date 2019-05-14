@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#62ad68"
+    android:background="@drawable/background"
     tools:context=".activities.ProfileActivity">
 
     <ImageView
@@ -26,18 +26,6 @@
         android:background="@drawable/cam"
         android:onClick="picImage" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:gravity="center"
-        android:textSize="26dp"
-        android:typeface="serif"
-        android:text="TextView" />
-
     <Button
         android:id="@+id/gallary"
         android:layout_width="80dp"
@@ -57,14 +45,14 @@
         android:layout_marginTop="2dp"
         android:layout_marginEnd="42dp"
         android:background="@drawable/bbg"
-        android:onClick="TicRecords" />
+        android:onClick="records" />
 
     <Button
         android:id="@+id/TicRecords"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignTop="@+id/BTNcmara"
-        android:onClick="TicRecords"
+        android:onClick="records"
         android:layout_alignEnd="@id/DumRecords"
 
         android:background="@drawable/bbp" />

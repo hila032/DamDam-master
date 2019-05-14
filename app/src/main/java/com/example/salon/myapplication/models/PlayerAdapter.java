@@ -1,4 +1,4 @@
-package com.example.salon.myapplication.activities;
+package com.example.salon.myapplication.models;
 
 import android.content.Context;
 import android.icu.text.AlphabeticIndex;
@@ -11,14 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.salon.myapplication.R;
-import com.example.salon.myapplication.models.RecordPlayer;
-
 import java.util.ArrayList;
 
 public class PlayerAdapter  extends ArrayAdapter<RecordPlayer> {
 
     private ArrayList<RecordPlayer> list;
     private Context context;
+
     public PlayerAdapter(@NonNull Context context, ArrayList<RecordPlayer> list) {
         super(context, R.layout.player_item ,list);
         this.list = list;

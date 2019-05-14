@@ -40,7 +40,7 @@
         android:onClick="relood" />
 
         <TextView
-        android:id="@+id/stutos"
+        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/stutos"
+        android:layout_below="@+id/status"
         android:textColor="@color/design_default_color_primary_dark"
         android:textSize="30sp" />
 
@@ -71,7 +71,7 @@
         android:id="@+id/TVreloodcounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/stutos"
+        android:layout_below="@+id/status"
         android:text="relood:"
         android:textColor="@color/design_default_color_primary_dark"
         android:textSize="30sp" />

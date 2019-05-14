@@ -27,7 +27,7 @@ public class DumDumEnemyChoseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_enamychose);
         SharedPreferencesModel.setIsInGame(false, this);
 
-        DumDumRoomsModel.getRoom(UsersModel.getId()).child(EPlayer.PLAYER1.name()).child(ERoom.id.name()).addValueEventListener(new ValueEventListener() {
+        DumDumRoomsModel.getRoom(UsersModel.getId()).child(EPlayer.PLAYER1.name()).child(ERoom.ID.name()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -35,8 +35,8 @@ public class DumDumEnemyChoseActivity extends AppCompatActivity {
 
                 if (dataSnapshot.getValue() != null && !isInGame) {
                     Intent intent = new Intent(DumDumEnemyChoseActivity.this, DunDumGameActivity.class);
-                    intent.putExtra(EIntant.id.name(), UsersModel.getId());
-                    intent.putExtra(EIntant.whoAmI.name(), EPlayer.PLAYER1);
+                    intent.putExtra(EIntant.ID.name(), UsersModel.getId());
+                    intent.putExtra(EIntant.WHO_AM_I.name(), EPlayer.PLAYER1);
                     startActivity(intent);
                 }
             }
@@ -60,7 +60,7 @@ public class DumDumEnemyChoseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        DumDumAvailableUsersModel.DumDumaddUserToAvailableUsers(UsersModel.getId(), UsersModel.getEmail());
+        DumDumAvailableUsersModel.addDumDumUserToAvailableUsers(UsersModel.getId(), UsersModel.getEmail());
 
     }
 }

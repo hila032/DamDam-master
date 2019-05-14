@@ -2,20 +2,13 @@ package com.example.salon.myapplication.models;
 
 import com.example.salon.myapplication.EDumGame;
 import com.example.salon.myapplication.EPlayer;
+import com.example.salon.myapplication.ERoom;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class DumDumGameModel {
 
-
-
-    public static void shoot(String roomId, EPlayer player) {
-        DumDumRoomsModel.setPlayerValueInGame(EDumGame.shoot.name(), roomId, player);
-    }
-    public static void defance(String roomId, EPlayer player) {
-        DumDumRoomsModel.setPlayerValueInGame(EDumGame.defance.name(), roomId, player);
-
-    }
-    public static void relood(String roomId, EPlayer player) {
-        DumDumRoomsModel.setPlayerValueInGame(EDumGame.relood.name(), roomId, player);
+    public static void setPlayerValueInGame(String playerNewValueInGame , String roomId, EPlayer player){
+        FirebaseDatabase.getInstance().getReference(ERoom.ROOMS.name()).child(roomId).child(player.name()).child(ERoom.CARD.name()).setValue(playerNewValueInGame);
     }
 }

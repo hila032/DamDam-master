@@ -49,7 +49,7 @@ public class DumDumEnemyListView extends ListView {
                     DumDumEnemyListView.this.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            InvitesModel.addInvits(UsersModel.getId(), adapter.getItem(position).getId());
+                            InvitesModel.addInvite(UsersModel.getId(), adapter.getItem(position).getId());
 
 
                         }

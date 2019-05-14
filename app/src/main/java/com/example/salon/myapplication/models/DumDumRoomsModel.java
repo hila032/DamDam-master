@@ -13,29 +13,20 @@ import static com.example.salon.myapplication.EPlayer.PLAYER2;
 public class DumDumRoomsModel {
 
     public static void addRoom(String id, String otherPlayerId, OnCompleteListener<Void> onCompleteGoToGameActivity){
-        DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name());
-        roomsReference.child(id).child(PLAYER1.name()).child(ERoom.id.name()).setValue(id);
-        roomsReference.child(id).child(PLAYER2.name()).child(ERoom.id.name()).setValue(otherPlayerId)
+        DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference(ERoom.ROOMS.name());
+        roomsReference.child(id).child(PLAYER1.name()).child(ERoom.ID.name()).setValue(id);
+        roomsReference.child(id).child(PLAYER2.name()).child(ERoom.ID.name()).setValue(otherPlayerId)
                 .addOnCompleteListener(onCompleteGoToGameActivity);
 
 
     }
     public static DatabaseReference getRoom(String roomId){
-        return FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId);
-    }
-    public static void setPlayerValueInGame(String playerNewValueInGame , String roomId, EPlayer player){
-        FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name()).setValue(playerNewValueInGame);
-    }
-    public static void removeCard(String roomId, EPlayer player){
-        FirebaseDatabase.getInstance().getReference(ERoom.Rooms.name()).child(roomId).child(player.name()).child(ERoom.card.name()).removeValue();
-    }
-    public static boolean isRoomExist(String roomId){
-        if (roomId != null){
-            return true;
-        }
-        return false;
+        return FirebaseDatabase.getInstance().getReference(ERoom.ROOMS.name()).child(roomId);
     }
 
+    public static void removeCard(String roomId, EPlayer player){
+        FirebaseDatabase.getInstance().getReference(ERoom.ROOMS.name()).child(roomId).child(player.name()).child(ERoom.CARD.name()).removeValue();
+    }
     public static void removeRoom(String roomId) {
         getRoom(roomId).removeValue();
     }

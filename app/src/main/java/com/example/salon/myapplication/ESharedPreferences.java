@@ -1,5 +1,5 @@
 package com.example.salon.myapplication;
 
 public enum ESharedPreferences {
-    state, isInGame
+    STATE, IS_IN_GAME, PROFILE, PIC_NAME, NICKNAME, ANONYMOUS
 }

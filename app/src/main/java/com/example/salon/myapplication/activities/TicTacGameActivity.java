@@ -26,18 +26,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 public class TicTacGameActivity extends AppCompatActivity {
-    private TextView textView;
-    private TextView ViewScore;
+    private TextView whosTurnIsTV;
     private String playerValue;
     private EPlayer player;
     private String roomId;
     private TicTacBoard board;
     private ChildEventListener changeTextListener;
     private boolean isMyTurn;
+    private ETicTacGame result;
     private DBRecords playerDataBase;
-    private final String x = "x";
-    private final String o = "o";
-    private final String tie = "Tie";
     private final String OTHER_PLAYER_TURN = "other player turn";
     private final String YOUR_TURN = "your turn";
 
@@ -45,24 +42,20 @@ public class TicTacGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_game);
-        textView = (TextView)findViewById(R.id.whosTurnIsTV);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+        whosTurnIsTV = (TextView)findViewById(R.id.whosTurnIsTV);
         SharedPreferencesModel.setIsInGame(true, this);
+        result = null;
         board = new TicTacBoard(this);
-        roomId = (String) this.getIntent().getExtras().get(EIntant.id.name());
+        roomId = (String) this.getIntent().getExtras().get(EIntant.ID.name());
         playerDataBase = new DBRecords(this);
-        player = (EPlayer) this.getIntent().getExtras().get(EIntant.whoAmI.name());
+        player = (EPlayer) this.getIntent().getExtras().get(EIntant.WHO_AM_I.name());
         if (player == EPlayer.PLAYER1){
-            playerValue=x;
+            playerValue=ETicTacGame.x.name();
             Toast.makeText(this, "you are x, you start", Toast.LENGTH_SHORT).show();
             isMyTurn = true;
             board.setAllButtonsInGame(isMyTurn);
         }else {
-            playerValue = o;
+            playerValue = ETicTacGame.o.name();
             Toast.makeText(this, "you are o, other player start", Toast.LENGTH_SHORT).show();
             isMyTurn = false;
             board.setAllButtonsInGame(isMyTurn);
@@ -71,8 +64,11 @@ public class TicTacGameActivity extends AppCompatActivity {
 
         changeTurnTextView();
 
+    }
 
-        ViewScore = (TextView)findViewById(R.id.winX);
+    @Override
+    protected void onStart() {
+        super.onStart();
         changeTextListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -81,21 +77,20 @@ public class TicTacGameActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (TicTacModle.isTicTacRoomExist(roomId)) {
                     for (int i =0; i<3; i++) {
                         String value = (String) dataSnapshot.child(i + "").getValue();
                         if (value != null) {
                             board.setValueInGame(Integer.parseInt(dataSnapshot.getKey()), i, value);
+
                         }
                     }
                     isMyTurn =!isMyTurn;
                     board.setAlfaInGame(isMyTurn);
                     board.setAllButtonsInGame(isMyTurn);
                     changeTurnTextView();
-                    String result = board.checkGameOver();
+                     result = board.checkGameOver();
                     handleGameFinish(result);
                 }
-            }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
@@ -113,38 +108,36 @@ public class TicTacGameActivity extends AppCompatActivity {
 
             }
         };
-        TicTacModle.getTicTactRoom(roomId).child(ETicTacGame.board.name()).addChildEventListener(changeTextListener);
+        TicTacModle.getTicTactRoom(roomId).child(ETicTacGame.BOARD.name()).addChildEventListener(changeTextListener);
     }
 
     private void changeTurnTextView() {
         if (isMyTurn) {
-            textView.setText(YOUR_TURN);
+            whosTurnIsTV.setText(YOUR_TURN);
         }else {
-            textView.setText(OTHER_PLAYER_TURN);
+            whosTurnIsTV.setText(OTHER_PLAYER_TURN);
         }
     }
 
-    public void changeText (View view) {
+    public void setCellValueOnClick(View view) {
+        updateDBOnClick(view);
         Button btn = (Button) view;
-        String rowTag = (String) ((LinearLayout) view.getParent()).getTag();
-        String colTag = (String) btn.getTag();
-        board.setValueInGame(Integer.valueOf(rowTag),Integer.valueOf(colTag),playerValue);
-        TicTacModle.setPlayerValueInTicTacGame(playerValue, rowTag,colTag, roomId);
         btn.setText(playerValue);
         btn.setEnabled(false);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferencesModel.setIsInGame(true,this);
+    private void updateDBOnClick(View view) {
+        String rowTag = (String) ((LinearLayout) view.getParent()).getTag();
+        String colTag = (String) view.getTag();
+        TicTacModle.setPlayerValueInTicTacGame(playerValue, rowTag,colTag, roomId);
+
     }
 
-    private void handleGameFinish(String result) {
+    private void handleGameFinish(ETicTacGame result) {
         switch (result) {
             case x:
-                Dialogs.endGame(TicTacGameActivity.this, x);
-                if (player.equals(EPlayer.PLAYER1.name())) {
+                Dialogs.endTicTacGame(TicTacGameActivity.this, ETicTacGame.x.name());
+                if (player == EPlayer.PLAYER1) {
                     playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 1, 0, 0));
                 } else {
                     playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
@@ -156,15 +149,14 @@ public class TicTacGameActivity extends AppCompatActivity {
                 } else {
                     playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
                 }
-                Dialogs.endGame(TicTacGameActivity.this, o);
+                Dialogs.endTicTacGame(TicTacGameActivity.this, ETicTacGame.o.name());
                 break;
-            case tie:
-                Dialogs.endGame(TicTacGameActivity.this, tie);
+            case TIE:
+                Dialogs.endTicTacGame(TicTacGameActivity.this, ETicTacGame.TIE.name());
                 playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 0, 1));
                 break;
         }
     }
-
     @Override
     protected void onStop() {
         super.onStop();

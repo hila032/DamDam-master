@@ -92,8 +92,8 @@ public class DBRecords extends SQLiteOpenHelper {
         values.put(COLUMN_ID, player.getId());
         values.put(COLUMN_FIRSTNAME, player.getName());
         values.put(COLUMN_WIN, player.getWin());
-        values.put(COLUMN_WIN, player.getLoss());
-        values.put(COLUMN_WIN, player.getLoss());
+        values.put(COLUMN_LOSS, player.getLoss());
+        values.put(COLUMN_TIe, player.getTie());
         long id =database.update(TABLE_TIC_TAC,values,COLUMN_ID + "=" + player.getId(), null);
         database.close();
         return id;

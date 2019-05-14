@@ -7,13 +7,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.salon.myapplication.R;
@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    private int CAM_ANSER = 12;
-    private int SELCT_PHOTO = 20;
+    private final int CAM_ANSER = 12;
+    private final int SELCT_PHOTO = 20;
     private String imageName = "profilePic.png";
     private ImageView pic;
     private Bitmap imageBitmap;
@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         checkAndReqeustPremissions();
         pic = (ImageView) findViewById(R.id.pic);
-        String name = SharedPreferencesModel.getPicName(this);
+        String name = SharedPreferencesModel.getPicName();
         if (!name.equals("")){
             loadProfileImage(imageName);
         }
@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
             imageBitmap = (Bitmap) data.getExtras().get("data");
             pic.setImageBitmap(imageBitmap);
             privateAddPic();
-            SharedPreferencesModel.seyPicName(imageName);
+            SharedPreferencesModel.setPicName(imageName);
         }
         if (requestCode == SELCT_PHOTO && resultCode == RESULT_OK) {
             Uri uri = data.getData();
@@ -95,13 +95,13 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             privateAddPic();
-            SharedPreferencesModel.seyPicName(imageName);
+            SharedPreferencesModel.setPicName(imageName);
 
         }
     }
 
     private void privateAddPic() {
-        FileOutputStream fileOutputStream = null;
+        FileOutputStream fileOutputStream;
         try {
 
             fileOutputStream = openFileOutput(imageName, Context.MODE_PRIVATE);
@@ -117,21 +117,19 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void loadProfileImage(String name) {
-        FileInputStream fileInputStream = null;
-        Bitmap bitmap = null;
+        FileInputStream fileInputStream;
+        Bitmap bitmap;
         try {
             fileInputStream = openFileInput(name);
             bitmap = BitmapFactory.decodeStream(fileInputStream);
             fileInputStream.close();
             pic.setImageBitmap(bitmap);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void TicRecords(View view) {
+    public void records(View view) {
         Intent intent = new Intent(this, RecordTicTacActivity.class);
         startActivity(intent);
     }

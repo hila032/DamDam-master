@@ -8,10 +8,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class TicTacModle {
+
+
     public static void addTicTacRoom (String myId, String otherId, String roomId, OnCompleteListener<Void> onCompleteGoToTicTacGameActivity){
-        DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId).child(ETicTacGame.board.name());
-        FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId).child(EPlayer.PLAYER1.name()).setValue(myId);
-         FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId).child(EPlayer.PLAYER2.name()).setValue(otherId);
+        DatabaseReference roomsReference = FirebaseDatabase.getInstance().getReference(ERoom.TICTACROOM.name()).child(roomId).child(ETicTacGame.BOARD.name());
+        FirebaseDatabase.getInstance().getReference(ERoom.TICTACROOM.name()).child(roomId).child(EPlayer.PLAYER1.name()).setValue(myId);
+         FirebaseDatabase.getInstance().getReference(ERoom.TICTACROOM.name()).child(roomId).child(EPlayer.PLAYER2.name()).setValue(otherId);
         for (int i = 0; i<3; i++){
             roomsReference.child(i + ETicTacGame.E.name());
             for (int k = 0; k <3; k++){
@@ -23,22 +25,17 @@ public class TicTacModle {
     }
 
     public static DatabaseReference getTicTactRoom(String roomId){
-        return FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId);
+        return FirebaseDatabase.getInstance().getReference(ERoom.TICTACROOM.name()).child(roomId);
     }
     public static DatabaseReference getTicTactBoard(String roomId){
-        return FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId).child(ETicTacGame.board.name());
+        return FirebaseDatabase.getInstance().getReference(ERoom.TICTACROOM.name()).child(roomId).child(ETicTacGame.BOARD.name());
     }
 
-    public static void setPlayerValueInTicTacGame(String playerNewValueInGame, String playerRowLocation,String playerColLocation, String roomId){
+    public static void setPlayerValueInTicTacGame(String playerNewValueInGame, String playerRowLocation, String playerColLocation, String roomId){
         getTicTactBoard(roomId).child(playerRowLocation).child(playerColLocation).setValue(playerNewValueInGame);
     }
+
     public static void removeTicTacRoom(String roomId) {
-        FirebaseDatabase.getInstance().getReference(ERoom.tictacRoom.name()).child(roomId).removeValue();
-    }
-    public static boolean isTicTacRoomExist(String roomId){
-        if (getTicTactRoom(roomId) != null){
-            return true;
-        }
-        return false;
+        FirebaseDatabase.getInstance().getReference(ERoom.TICTACROOM.name()).child(roomId).removeValue();
     }
 }

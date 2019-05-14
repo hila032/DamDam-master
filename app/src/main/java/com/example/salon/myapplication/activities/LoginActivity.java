@@ -15,15 +15,14 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
 
 
-    private TextView registerUser;
     private EditText username, password;
-    private Button loginButton;
+    private Button loginButton,registerUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        registerUser = (TextView) findViewById(R.id.registerLogin);
+        registerUser = (Button) findViewById(R.id.registerLogin);
         username = (EditText) findViewById(R.id.usernameLogin);
         password = (EditText) findViewById(R.id.passwordLogin);
         loginButton = (Button) findViewById(R.id.loginButton);

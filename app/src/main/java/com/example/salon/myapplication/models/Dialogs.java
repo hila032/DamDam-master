@@ -22,30 +22,32 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 
 public class Dialogs {
-    private static ImageView mycardDilog;
-    private static ImageView othercardDilog;
+    private static ImageView myCardDilog;
+    private static ImageView otherCardDilog;
     private static Button okDilog;
-    public static void sendPlayerGameMassag(final Activity correntActivity, final DataSnapshot otherIdSnapshot){
+    public static void sendDumDumPlayerGameMassag(final Activity correntActivity, final DataSnapshot otherIdSnapshot){
         AlertDialog.Builder builder = new AlertDialog.Builder(correntActivity);
-        builder.setMessage("im pop")
-                .setTitle("invitetion")
-                .setNegativeButton("nope", new DialogInterface.OnClickListener() {
+        builder.setMessage("you receive an invitation to a dum dum chicken duel")
+                .setTitle("invitation")
+                .setNegativeButton("NO, thank you", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         InvitesModel.removeInvitation(UsersModel.getId());
+                        dialog.dismiss();
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK, Challenge accepted", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
                         InvitesModel.removeInvitation(UsersModel.getId());
 
                         OnCompleteListener<Void> onCompleteGoToGameActivity = new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                dialog.dismiss();
                                 Intent intent = new Intent (correntActivity, DunDumGameActivity.class);
-                                intent.putExtra(EIntant.id.name(), otherIdSnapshot.getValue().toString());
-                                intent.putExtra(EIntant.whoAmI.name(), EPlayer.PLAYER2);
+                                intent.putExtra(EIntant.ID.name(), otherIdSnapshot.getValue().toString());
+                                intent.putExtra(EIntant.WHO_AM_I.name(), EPlayer.PLAYER2);
                                 correntActivity.startActivity(intent);
                             }
                         };
@@ -55,9 +57,9 @@ public class Dialogs {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-    public static void endGame(final Activity correntActivity, String player){
+    public static void endTicTacGame(final Activity correntActivity, String playerValue){
         AlertDialog.Builder builder = new AlertDialog.Builder(correntActivity);
-        builder.setMessage("Game over, the Winner is: " + player);
+        builder.setMessage("Game over, the Winner is: " + playerValue);
         builder.setTitle("Game Over");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -75,8 +77,8 @@ public class Dialogs {
     public static void DumDumEndGame(final Activity correntActivity, String player, String myCard, String otherCard){
         final Dialog dialog = new Dialog(correntActivity);
         dialog.setContentView(R.layout.end_game_dialog);
-        mycardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
-        othercardDilog = (ImageView)dialog.findViewById(R.id.otherCardIV);
+        myCardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
+        otherCardDilog = (ImageView)dialog.findViewById(R.id.otherCardIV);
         TextView winner = (TextView) dialog.findViewById(R.id.winner);
         winner.setText("the winner is " + player);
         showImage(myCard,otherCard);
@@ -96,8 +98,8 @@ public class Dialogs {
     public static void tie(final Activity correntActivity, String myCard, String otherCard){
         final Dialog dialog = new Dialog(correntActivity);
         dialog.setContentView(R.layout.tie_dialog);
-        mycardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
-        othercardDilog = (ImageView)dialog.findViewById(R.id.otherCardIV);
+        myCardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
+        otherCardDilog = (ImageView)dialog.findViewById(R.id.otherCardIV);
         showImage(myCard,otherCard);
         okDilog = (Button) dialog.findViewById(R.id.ok);
         okDilog.setOnClickListener(new View.OnClickListener() {
@@ -111,49 +113,49 @@ public class Dialogs {
         }
     }
     private static void showImage(String myCard, String otherCard){
-        if (myCard.equals(EDumGame.shoot.name())){
-            mycardDilog.setImageResource(R.drawable.shoot);
+        if (myCard.equals(EDumGame.SHOOT.name())){
+            myCardDilog.setImageResource(R.drawable.shoot);
         }
-        if (myCard.equals(EDumGame.defance.name())){
-            mycardDilog.setImageResource(R.drawable.defance);
+        if (myCard.equals(EDumGame.DEFENCE.name())){
+            myCardDilog.setImageResource(R.drawable.defance);
         }
-        if (myCard.equals(EDumGame.relood.name())){
-            mycardDilog.setImageResource(R.drawable.relood);
+        if (myCard.equals(EDumGame.RELOAD.name())){
+            myCardDilog.setImageResource(R.drawable.relood);
         }
-        if (otherCard.equals(EDumGame.shoot.name())){
-            othercardDilog.setImageResource(R.drawable.shoot);
+        if (otherCard.equals(EDumGame.SHOOT.name())){
+            otherCardDilog.setImageResource(R.drawable.shoot);
         }
-        if (otherCard.equals(EDumGame.relood.name())){
-            othercardDilog.setImageResource(R.drawable.relood);
+        if (otherCard.equals(EDumGame.RELOAD.name())){
+            otherCardDilog.setImageResource(R.drawable.relood);
         }
-        if (otherCard.equals(EDumGame.defance.name())){
-            othercardDilog.setImageResource(R.drawable.defance);
+        if (otherCard.equals(EDumGame.DEFENCE.name())){
+            otherCardDilog.setImageResource(R.drawable.defance);
         }
-
     }
 
     // tic tac
     public static void sendPlayerTicTacGameMassag(final Activity correntActivity, final DataSnapshot otherIdSnapshot){
         AlertDialog.Builder builder = new AlertDialog.Builder(correntActivity);
-        builder.setMessage("im pop")
+        builder.setMessage("you receive an invitation to a tic tac toe duel")
                 .setTitle("invitetion")
-                .setNegativeButton("nope", new DialogInterface.OnClickListener() {
+                .setNegativeButton("NO, thank you", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         InvitesModel.removeInvitation(UsersModel.getId());
+                        dialog.cancel();
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK, Challenge accepted", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         InvitesModel.removeInvitation(UsersModel.getId());
-
+                        dialog.cancel();
                         OnCompleteListener<Void> onCompleteGoToTicTacGameActivity = new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Intent intent = new Intent (correntActivity, TicTacGameActivity.class);
-                                intent.putExtra(EIntant.id.name(), otherIdSnapshot.getValue().toString());
-                                intent.putExtra(EIntant.whoAmI.name(), EPlayer.PLAYER2);
+                                intent.putExtra(EIntant.ID.name(), otherIdSnapshot.getValue().toString());
+                                intent.putExtra(EIntant.WHO_AM_I.name(), EPlayer.PLAYER2);
                                 correntActivity.startActivity(intent);
                             }
                         };
