@@ -1,6 +1,7 @@
 package com.example.salon.myapplication.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -56,10 +57,11 @@ public class DunDumGameActivity extends AppCompatActivity {
         enableClikes(true);
 
         changeCardListener = new ValueEventListener() {
+            Intent intent = new Intent(DunDumGameActivity.this, DumDumEnemyChoseActivity.class);
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null){
-                    finish();
+                if (dataSnapshot.getValue() == null ){
+                    startActivity(intent);
                 }
                 myCard = (String) dataSnapshot.child((player).name()).child(ERoom.CARD.name()).getValue();
                 String otherPlayerCard = (String) dataSnapshot.child(EPlayer.getOtherPlayer(player).name()).child(ERoom.CARD.name()).getValue();
@@ -103,7 +105,7 @@ public class DunDumGameActivity extends AppCompatActivity {
         if (myCard.equals(EDumGame.SHOOT.name())&& reloadCounter > 0) {
             if (myCard.equals(EDumGame.SHOOT.name()) && otherPlayerCard.equals(EDumGame.RELOAD.name())) { //player 1 win
                 DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
-                Dialogs.DumDumEndGame(this, myName,myCard,otherPlayerCard);
+                Dialogs.handelGame(this,myCard,otherPlayerCard, myName);
             }
             reloadCounter--;
             enableShoot();
@@ -111,15 +113,16 @@ public class DunDumGameActivity extends AppCompatActivity {
         }
         else if (otherPlayerCard.equals(EDumGame.SHOOT.name()) && myCard.equals(EDumGame.RELOAD.name())) { // other plyer win
             DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
-            Dialogs.DumDumEndGame(this, otherPlayerName,myCard,otherPlayerCard);
+            Dialogs.handelGame(this ,myCard,otherPlayerCard, otherPlayerName);
+        }else {
+            Dialogs.handelGame(this, myCard, otherPlayerCard, null);
         }
-        Dialogs.tie(this,myCard,otherPlayerCard);
-
         if (myCard.equals(EDumGame.RELOAD.name())) {
             reloadCounter++;
             TVreloadCounter.setText(String.valueOf(reloadCounter));
             enableShoot();
         }
+
     }
 
     public void enableClikes(boolean isNeedToEnabled){
@@ -164,5 +167,10 @@ public class DunDumGameActivity extends AppCompatActivity {
         SharedPreferencesModel.setIsInGame(false, this);
         DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
         Sound.release();
+    }
+
+    public void homePage(View view) {
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
     }
 }

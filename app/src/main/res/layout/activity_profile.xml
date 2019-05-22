@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/backj"
     tools:context=".activities.ProfileActivity">
 
     <ImageView
         android:id="@+id/pic"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:src="@drawable/prof"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/prof" />
 
     <Button
         android:id="@+id/BTNcmara"
@@ -37,25 +36,16 @@
         />
 
     <Button
-        android:id="@+id/DumRecords"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignTop="@+id/gallary"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="42dp"
-        android:background="@drawable/bbg"
-        android:onClick="records" />
-
-    <Button
         android:id="@+id/TicRecords"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignTop="@+id/BTNcmara"
-        android:onClick="records"
-        android:layout_alignEnd="@id/DumRecords"
+        android:layout_width="125dp"
+        android:layout_height="150dp"
+        android:layout_alignBaseline="@+id/gallary"
 
-        android:background="@drawable/bbp" />
+        android:layout_alignTop="@+id/BTNcmara"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
+        android:background="@drawable/trophy"
+        android:onClick="records" />
 
 
 </RelativeLayout>

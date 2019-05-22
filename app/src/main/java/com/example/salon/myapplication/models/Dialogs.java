@@ -75,40 +75,34 @@ public class Dialogs {
         }
     }
 
-    public static void DumDumEndGame(final Activity correntActivity, String player, String myCard, String otherCard){
-        final Dialog dialog = new Dialog(correntActivity);
-        dialog.setContentView(R.layout.end_game_dialog);
-        myCardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
-        otherCardDilog = (ImageView)dialog.findViewById(R.id.otherCardIV);
-        TextView winner = (TextView) dialog.findViewById(R.id.winner);
-        winner.setText("the winner is " + player);
-        showImage(myCard,otherCard);
-        okDilog = (Button) dialog.findViewById(R.id.ok);
-        okDilog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                correntActivity.finish();
-            }
-        });
-        if (correntActivity.hasWindowFocus()) {
-            dialog.show();
-        }
-    }
-
-    public static void tie(final Activity correntActivity, String myCard, String otherCard){
+    public static void handelGame(final Activity correntActivity, String myCard, String otherCard, String player){
         final Dialog dialog = new Dialog(correntActivity);
         dialog.setContentView(R.layout.tie_dialog);
         myCardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
-        otherCardDilog = (ImageView)dialog.findViewById(R.id.otherCardIV);
-        showImage(myCard,otherCard);
-        okDilog = (Button) dialog.findViewById(R.id.ok);
-        okDilog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        otherCardDilog = (ImageView) dialog.findViewById(R.id.otherCardIV);
+        TextView winner = (TextView) dialog.findViewById(R.id.winner);
+        if (player != null) {
+            showImage(myCard,otherCard);
+            winner.setText("the winner is " + player);
+            okDilog = (Button) dialog.findViewById(R.id.ok);
+            okDilog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    correntActivity.finish();
+                }
+            });
+        }else {
+
+            showImage(myCard, otherCard);
+            okDilog = (Button) dialog.findViewById(R.id.ok);
+            okDilog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+        }
         if (correntActivity.hasWindowFocus()) {
             dialog.show();
         }
@@ -164,7 +158,7 @@ public class Dialogs {
                     }
                 });
         AlertDialog dialog = builder.create();
-        dialog.show();
+        InvitesModel.listenToRemoveInvitation(dialog);
     }
 }
 

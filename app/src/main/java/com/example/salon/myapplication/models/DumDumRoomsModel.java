@@ -31,5 +31,4 @@ public class DumDumRoomsModel {
         getRoom(roomId).removeValue();
     }
 
-
 }

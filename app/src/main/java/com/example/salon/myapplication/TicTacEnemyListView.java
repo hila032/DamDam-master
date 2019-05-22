@@ -32,7 +32,7 @@ public class TicTacEnemyListView extends ListView {
     }
 
     private void createAdapter(Context context){
-        final ArrayAdapter<TicTacEnemyListView.OtherPlayerInfo> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
+        final ArrayAdapter<OtherPlayerInfo> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
         this.setAdapter(adapter);
         TicTacAvailableUsersModle.getTicTacAvailableUsers().addValueEventListener(new ValueEventListener() {
             @Override
@@ -43,7 +43,7 @@ public class TicTacEnemyListView extends ListView {
                     String email = availableUserDataSnapshot.getValue().toString();
                     if (!id.equals(UsersModel.getId())) {
 
-                        adapter.add(new TicTacEnemyListView.OtherPlayerInfo(id, email));
+                        adapter.add(new OtherPlayerInfo(id, email));
                     }
 
                     TicTacEnemyListView.this.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,35 +63,5 @@ public class TicTacEnemyListView extends ListView {
             }
         });
     }
-    class OtherPlayerInfo{
-        private String id;
-        private String email;
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        @Override
-        public String toString() {
-            return email;
-        }
-
-        public OtherPlayerInfo(String id, String email) {
-
-            this.id = id;
-            this.email = email;
-        }
-    }
 }

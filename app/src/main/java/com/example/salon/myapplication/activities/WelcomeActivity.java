@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.salon.myapplication.HowToPlayActivity;
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.DumDumAvailableUsersModel;
 import com.example.salon.myapplication.models.MyReceiver;
@@ -84,5 +85,10 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         broadcastIntent();
+    }
+
+    public void howToPlay(View view) {
+        Intent intent = new Intent(this, HowToPlayActivity.class);
+        startActivity(intent);
     }
 }

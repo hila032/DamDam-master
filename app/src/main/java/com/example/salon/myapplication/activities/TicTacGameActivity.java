@@ -1,5 +1,6 @@
 package com.example.salon.myapplication.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.example.salon.myapplication.ETicTacGame;
 import com.example.salon.myapplication.R;
 import com.example.salon.myapplication.models.DBRecords;
 import com.example.salon.myapplication.models.Dialogs;
+import com.example.salon.myapplication.models.InvitesModel;
 import com.example.salon.myapplication.models.RecordPlayer;
 import com.example.salon.myapplication.models.SharedPreferencesModel;
 import com.example.salon.myapplication.models.TicTacBoard;
@@ -24,6 +26,8 @@ import com.example.salon.myapplication.models.UsersModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+
+import java.time.Instant;
 
 public class TicTacGameActivity extends AppCompatActivity {
     private TextView whosTurnIsTV;
@@ -69,6 +73,7 @@ public class TicTacGameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        InvitesModel.removeInvitation(UsersModel.getId());
         changeTextListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -138,22 +143,22 @@ public class TicTacGameActivity extends AppCompatActivity {
             case x:
                 Dialogs.endTicTacGame(TicTacGameActivity.this, ETicTacGame.x.name());
                 if (player == EPlayer.PLAYER1) {
-                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 1, 0, 0));
+                    playerDataBase.createTicTacPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 1, 0, 0));
                 } else {
-                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
+                    playerDataBase.createTicTacPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
                 }
                 break;
             case o:
                 if (player.equals(EPlayer.PLAYER2.name())) {
-                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 1, 0, 0));
+                    playerDataBase.createTicTacPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 1, 0, 0));
                 } else {
-                    playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
+                    playerDataBase.createTicTacPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 1, 0));
                 }
                 Dialogs.endTicTacGame(TicTacGameActivity.this, ETicTacGame.o.name());
                 break;
             case TIE:
                 Dialogs.endTicTacGame(TicTacGameActivity.this, ETicTacGame.TIE.name());
-                playerDataBase.createDumPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 0, 1));
+                playerDataBase.createTicTacPlayer(new RecordPlayer(UsersModel.getNickname(TicTacGameActivity.this), 0, 0, 1));
                 break;
         }
     }
@@ -163,5 +168,10 @@ public class TicTacGameActivity extends AppCompatActivity {
         SharedPreferencesModel.setIsInGame(false, this);
         TicTacModle.removeTicTacRoom(roomId);
         TicTacModle.getTicTactRoom(roomId).removeEventListener(changeTextListener);
+    }
+
+    public void homePage(View view) {
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
     }
 }

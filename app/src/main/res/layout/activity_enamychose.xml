@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/backj"
     tools:context=".activities.DumDumEnemyChoseActivity">
 
     <com.example.salon.myapplication.DumDumEnemyListView
@@ -12,5 +12,5 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/background"></com.example.salon.myapplication.DumDumEnemyListView>
+        android:background="@drawable/backj"></com.example.salon.myapplication.DumDumEnemyListView>
 </RelativeLayout>

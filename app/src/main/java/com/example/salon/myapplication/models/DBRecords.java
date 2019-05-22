@@ -9,15 +9,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class DBRecords extends SQLiteOpenHelper {
-    public static final String DATABASENAME = "Score.db";
-    public static final String TABLE_TIC_TAC = "tbIicTac";
-    public static final int DATABASEVERSION = 2;
-    public static final String COLUMN_FIRSTNAME = "Name";
-    public static final String COLUMN_WIN = "win";
-    public static final String COLUMN_LOSS = "loss";
-    public static final String COLUMN_TIe = "tie";
-    public static final String COLUMN_ID = "Id";
-    public static final String[] allColumns = {COLUMN_ID, COLUMN_FIRSTNAME, COLUMN_WIN, COLUMN_LOSS, COLUMN_TIe};
+    private static final String DATABASENAME = "Score.db";
+    private static final String TABLE_TIC_TAC = "tbIicTac";
+    private static final int DATABASEVERSION = 2;
+    private static final String COLUMN_FIRSTNAME = "Name";
+    private static final String COLUMN_WIN = "win";
+    private static final String COLUMN_LOSS = "loss";
+    private static final String COLUMN_TIe = "tie";
+    private static final String COLUMN_ID = "Id";
+    private static final String[] allColumns = {COLUMN_ID, COLUMN_FIRSTNAME, COLUMN_WIN, COLUMN_LOSS, COLUMN_TIe};
 
     private SQLiteDatabase database;
     private String sortOrder = COLUMN_WIN + " DESC";
@@ -44,7 +44,7 @@ public class DBRecords extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIC_TAC);
         onCreate(db);
     }
-    public void createDumPlayer (RecordPlayer player){
+    public void createTicTacPlayer(RecordPlayer player){
         database = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_FIRSTNAME, player.getName());

@@ -34,29 +34,18 @@ public class RecordPlayer {
         return win;
     }
 
-    public void setWin(int win) {
-        this.win = win;
-    }
 
     public int getLoss() {
         return loss;
     }
-
-    public void setLoss(int loss) {
-        this.loss = loss;
-    }
-
     public int getTie() {
         return tie;
-    }
-
-    public void setTie(int tie) {
-        this.tie = tie;
     }
 
     public long getId() {
         return id;
     }
+
 
     public void setId(long id) {
         this.id = id;

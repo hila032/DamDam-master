@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/backj"
     tools:context=".activities.TicTacGameActivity">
 
     <LinearLayout
@@ -160,6 +160,15 @@
         android:layout_alignStart="@+id/Llmain"
         android:layout_marginTop="18dp"
         android:textSize="24sp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="homePage"
+        app:srcCompat="@drawable/home" />
 
 
 </RelativeLayout>

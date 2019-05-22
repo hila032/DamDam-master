@@ -52,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.SEND_SMS,
             Manifest.permission.VIBRATE,
+            Manifest.permission.INTERNET
     };
 
 
