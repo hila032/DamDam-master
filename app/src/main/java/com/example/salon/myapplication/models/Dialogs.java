@@ -75,15 +75,20 @@ public class Dialogs {
         }
     }
 
-    public static void handelGame(final Activity correntActivity, String myCard, String otherCard, String player){
+    public static void handelGame(final Activity correntActivity, String myCard, String otherCard, EPlayer winnerName, EPlayer name){
         final Dialog dialog = new Dialog(correntActivity);
         dialog.setContentView(R.layout.tie_dialog);
         myCardDilog = (ImageView) dialog.findViewById(R.id.myCardIV);
         otherCardDilog = (ImageView) dialog.findViewById(R.id.otherCardIV);
         TextView winner = (TextView) dialog.findViewById(R.id.winner);
-        if (player != null) {
+        if (winnerName != null) {
             showImage(myCard,otherCard);
-            winner.setText("the winner is " + player);
+            if (winnerName == name) {
+                winner.setText("you are the winner");
+            }
+            else {
+                winner.setText("other player wins");
+            }
             okDilog = (Button) dialog.findViewById(R.id.ok);
             okDilog.setOnClickListener(new View.OnClickListener() {
                 @Override

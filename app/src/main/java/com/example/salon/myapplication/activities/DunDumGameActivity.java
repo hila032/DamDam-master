@@ -76,7 +76,7 @@ public class DunDumGameActivity extends AppCompatActivity {
                     return;
                 }
                 enableClikes(true);
-                handleWinner(myCard, player.name(), otherPlayerCard, EPlayer.getOtherPlayer(player).name());
+                handleWinner(myCard, player, otherPlayerCard, EPlayer.getOtherPlayer(player));
                 if (myCard != null && otherPlayerCard != null) {
                     DumDumRoomsModel.removeCard(roomId,player);
                 }
@@ -101,11 +101,11 @@ public class DunDumGameActivity extends AppCompatActivity {
 
     }
 
-    public void handleWinner(String myCard, String myName, String otherPlayerCard, String otherPlayerName){
+    public void handleWinner(String myCard, EPlayer myName, String otherPlayerCard, EPlayer otherPlayerName){
         if (myCard.equals(EDumGame.SHOOT.name())&& reloadCounter > 0) {
             if (myCard.equals(EDumGame.SHOOT.name()) && otherPlayerCard.equals(EDumGame.RELOAD.name())) { //player 1 win
                 DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
-                Dialogs.handelGame(this,myCard,otherPlayerCard, myName);
+                Dialogs.handelGame(this,myCard,otherPlayerCard, myName, myName);
             }
             reloadCounter--;
             enableShoot();
@@ -113,9 +113,9 @@ public class DunDumGameActivity extends AppCompatActivity {
         }
         else if (otherPlayerCard.equals(EDumGame.SHOOT.name()) && myCard.equals(EDumGame.RELOAD.name())) { // other plyer win
             DumDumRoomsModel.getRoom(roomId).removeEventListener(changeCardListener);
-            Dialogs.handelGame(this ,myCard,otherPlayerCard, otherPlayerName);
+            Dialogs.handelGame(this ,myCard,otherPlayerCard, otherPlayerName, myName);
         }else {
-            Dialogs.handelGame(this, myCard, otherPlayerCard, null);
+            Dialogs.handelGame(this, myCard, otherPlayerCard, null, myName);
         }
         if (myCard.equals(EDumGame.RELOAD.name())) {
             reloadCounter++;
